@@ -63,7 +63,7 @@ int main(int argc, char *args[]) {
         return 4;
     }
 
-    if (nave_criar(&nave, 50, 50, (32 * 3), (32 * 3), 1)) {
+    if (nave_criar(&nave, 50, 50, (32 * 3), (32 * 3), 10)) {
         puts("Erro ao criar nave!");
         nave_liberar(&nave);
         liberar_texturas(textura);

@@ -27,11 +27,11 @@ void nave_desenhar(SDL_Renderer *tela, SDL_Texture *textura, Nave **nave) {
 }
 
 void nave_movimentar(Nave **nave) {
-    if ((*nave)->movimentando_cima) {
+    if ((*nave)->movimentando_cima && (*nave)->y > 0) {
         (*nave)->y -= (*nave)->velocidade;
     }
 
-    if ((*nave)->movimentando_baixo) {
+    if ((*nave)->movimentando_baixo && ((*nave)->y + (*nave)->altura) < JANELA_ALTURA) {
         (*nave)->y += (*nave)->velocidade;
     }
 }
