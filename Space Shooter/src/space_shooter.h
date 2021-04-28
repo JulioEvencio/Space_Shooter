@@ -24,5 +24,7 @@ static char *textura_arquivo[TEXTURA_QUANTIDADE] = {
 
 int carregar_texturas(SDL_Renderer *tela, SDL_Texture *textura[]);
 void liberar_texturas(SDL_Texture *textura[]);
+void verificar_tecla_pressionada(SDL_Event *evento);
+void verificar_tecla_solta(SDL_Event *evento);
 
 #endif

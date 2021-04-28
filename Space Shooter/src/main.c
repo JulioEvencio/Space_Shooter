@@ -64,7 +64,13 @@ int main(int argc, char *args[]) {
                 loop = 0;
             }
 
-            /*  Code */
+            if (evento.type == SDL_KEYDOWN) {
+                verificar_tecla_pressionada(&evento);
+            }
+
+            if (evento.type == SDL_KEYUP) {
+                verificar_tecla_solta(&evento);
+            }
         }
 
         SDL_SetRenderDrawColor(tela, JANELA_COR);
