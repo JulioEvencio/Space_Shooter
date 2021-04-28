@@ -7,3 +7,14 @@ void menu_tela(SDL_Renderer *tela, SDL_Texture *textura[]) {
     SDL_Rect play = {MENU_PLAY_X, MENU_PLAY_Y, MENU_PLAY_LARGURA, MENU_PLAY_ALTURA};
     SDL_RenderCopy(tela, textura[TEXTURA_PLAY], NULL, &play);
 }
+
+void menu_click(SDL_Renderer *tela, SDL_Event *evento, int *loop) {
+    int coluna_mouse = (*evento).motion.x;
+    int linha_mouse = (*evento).motion.y;
+
+    if (coluna_mouse > MENU_PLAY_X && coluna_mouse < (MENU_PLAY_X + MENU_PLAY_LARGURA)) {
+        if (linha_mouse > MENU_PLAY_Y && linha_mouse < (MENU_PLAY_Y + MENU_PLAY_ALTURA)) {
+            *loop = LOOP_JOGO;
+        }
+    }
+}

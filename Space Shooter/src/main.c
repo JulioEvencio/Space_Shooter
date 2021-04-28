@@ -72,6 +72,10 @@ int main(int argc, char *args[]) {
             if (evento.type == SDL_KEYUP && loop == LOOP_JOGO) {
                 verificar_tecla_solta(&evento);
             }
+
+            if (evento.type == SDL_MOUSEBUTTONDOWN && loop == LOOP_MENU) {
+                menu_click(tela, &evento, &loop);
+            }
         }
 
         SDL_SetRenderDrawColor(tela, JANELA_COR);
