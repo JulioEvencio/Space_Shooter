@@ -11,8 +11,8 @@ int nave_criar(Nave **nave, int x, int y, int largura, int altura, int velocidad
     (*nave)->largura = largura;
     (*nave)->altura = altura;
     (*nave)->velocidade = velocidade;
-    (*nave)->movimentando_esquerda = NAVE_MOVIMENTO_INICIAL;
-    (*nave)->movimentando_direita = NAVE_MOVIMENTO_INICIAL;
+    (*nave)->movimentando_cima = NAVE_MOVIMENTO_INICIAL;
+    (*nave)->movimentando_baixo = NAVE_MOVIMENTO_INICIAL;
 
     return 0;
 }
@@ -24,4 +24,30 @@ int nave_liberar(Nave **nave) {
 void nave_desenhar(SDL_Renderer *tela, SDL_Texture *textura, Nave **nave) {
     SDL_Rect retangulo_nave = {(*nave)->x, (*nave)->y, (*nave)->largura, (*nave)->altura};
     SDL_RenderCopy(tela, textura, NULL, &retangulo_nave);
+}
+
+void nave_movimentar(Nave **nave) {
+    if ((*nave)->movimentando_cima) {
+        (*nave)->y -= (*nave)->velocidade;
+    }
+
+    if ((*nave)->movimentando_baixo) {
+        (*nave)->y += (*nave)->velocidade;
+    }
+}
+
+void nave_subir(Nave **nave) {
+    (*nave)->movimentando_cima = NAVE_MOVER;
+}
+
+void nave_parar_subida(Nave **nave) {
+    (*nave)->movimentando_cima = NAVE_PARAR;
+}
+
+void nave_descer(Nave **nave) {
+    (*nave)->movimentando_baixo = NAVE_MOVER;
+}
+
+void nave_parar_descida(Nave **nave) {
+    (*nave)->movimentando_baixo = NAVE_PARAR;
 }

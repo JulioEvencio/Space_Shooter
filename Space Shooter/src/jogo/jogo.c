@@ -5,6 +5,7 @@ void jogo_tela(SDL_Renderer *tela, SDL_Texture *textura[], Nave **jogador) {
     SDL_RenderCopy(tela, textura[TEXTURA_BACKGROUND], NULL, &fundo);
 
     nave_desenhar(tela, textura[TEXTURA_SPRITE_PERSONAGEM_1], jogador);
+    nave_movimentar(jogador);
 
     /*  Code */
 }

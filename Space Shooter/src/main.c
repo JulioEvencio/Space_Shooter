@@ -80,11 +80,11 @@ int main(int argc, char *args[]) {
             }
 
             if (evento.type == SDL_KEYDOWN && loop == LOOP_JOGO) {
-                verificar_tecla_pressionada(&evento);
+                verificar_tecla_pressionada(&evento, &nave);
             }
 
             if (evento.type == SDL_KEYUP && loop == LOOP_JOGO) {
-                verificar_tecla_solta(&evento);
+                verificar_tecla_solta(&evento, &nave);
             }
 
             if (evento.type == SDL_MOUSEBUTTONDOWN && loop == LOOP_MENU) {

@@ -20,14 +20,14 @@ void liberar_texturas(SDL_Texture *textura[]) {
     }
 }
 
-void verificar_tecla_pressionada(SDL_Event *evento) {
+void verificar_tecla_pressionada(SDL_Event *evento, Nave **jogador) {
     switch ((*evento).key.keysym.sym) {
         case SDLK_UP:
-            puts("Tecla cima pressionada");
+            nave_subir(jogador);
             break;
 
         case SDLK_DOWN:
-            puts("Tecla baixo pressionada");
+            nave_descer(jogador);
             break;
 
         case SDLK_SPACE:
@@ -36,14 +36,14 @@ void verificar_tecla_pressionada(SDL_Event *evento) {
     }
 }
 
-void verificar_tecla_solta(SDL_Event *evento) {
+void verificar_tecla_solta(SDL_Event *evento, Nave **jogador) {
     switch ((*evento).key.keysym.sym) {
         case SDLK_UP:
-            puts("Tecla cima solta");
+            nave_parar_subida(jogador);
             break;
 
         case SDLK_DOWN:
-            puts("Tecla baixo solta");
+            nave_parar_descida(jogador);
             break;
 
         case SDLK_SPACE:
