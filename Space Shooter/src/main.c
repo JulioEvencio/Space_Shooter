@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "space_shooter.h"
+#include "menu/menu.h"
 
 int main(int argc, char *args[]) {
     int loop = LOOP_MENU;
@@ -78,7 +79,7 @@ int main(int argc, char *args[]) {
 
         switch (loop) {
             case LOOP_MENU:
-                /*  Code */
+                menu_tela(tela, textura);
             break;
 
             case LOOP_JOGO:
