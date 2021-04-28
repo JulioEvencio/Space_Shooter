@@ -19,35 +19,3 @@ void liberar_texturas(SDL_Texture *textura[]) {
         SDL_DestroyTexture(textura[i]);
     }
 }
-
-void verificar_tecla_pressionada(SDL_Event *evento, Nave **jogador) {
-    switch ((*evento).key.keysym.sym) {
-        case SDLK_UP:
-            nave_subir(jogador);
-            break;
-
-        case SDLK_DOWN:
-            nave_descer(jogador);
-            break;
-
-        case SDLK_SPACE:
-            puts("tecla espaco pressionada");
-            break;
-    }
-}
-
-void verificar_tecla_solta(SDL_Event *evento, Nave **jogador) {
-    switch ((*evento).key.keysym.sym) {
-        case SDLK_UP:
-            nave_parar_subida(jogador);
-            break;
-
-        case SDLK_DOWN:
-            nave_parar_descida(jogador);
-            break;
-
-        case SDLK_SPACE:
-            puts("tecla espaco solta");
-            break;
-    }
-}

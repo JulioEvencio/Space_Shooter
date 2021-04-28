@@ -3,7 +3,6 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "jogo/nave/nave.h"
 
 #define JANELA_NOME "Space Shooter"
 #define JANELA_LARGURA 1200
@@ -35,7 +34,5 @@ enum Loop {
 
 int carregar_texturas(SDL_Renderer *tela, SDL_Texture *textura[]);
 void liberar_texturas(SDL_Texture *textura[]);
-void verificar_tecla_pressionada(SDL_Event *evento, Nave **jogador);
-void verificar_tecla_solta(SDL_Event *evento, Nave **jogador);
 
 #endif

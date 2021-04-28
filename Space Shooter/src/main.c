@@ -2,12 +2,12 @@
 #include "space_shooter.h"
 #include "menu/menu.h"
 #include "jogo/jogo.h"
-#include "jogo/nave/nave.h"
+#include "jogo/personagem/personagem.h"
 
 int main(int argc, char *args[]) {
     int loop = LOOP_MENU;
 
-    Nave *nave = NULL;
+    Personagem *jogador = NULL;
 
     SDL_Window *janela = NULL;
     SDL_Renderer *tela = NULL;
@@ -63,9 +63,8 @@ int main(int argc, char *args[]) {
         return 4;
     }
 
-    if (nave_criar(&nave, 50, 50, (32 * 3), (32 * 3), 10)) {
-        puts("Erro ao criar nave!");
-        nave_liberar(&nave);
+    if (personagem_criar(&jogador, textura[TEXTURA_SPRITE_PERSONAGEM_1])) {
+        puts("Erro ao criar jogador!");
         liberar_texturas(textura);
         SDL_DestroyRenderer(tela);
         SDL_DestroyWindow(janela);
@@ -79,12 +78,8 @@ int main(int argc, char *args[]) {
                 loop = LOOP_SAIR;
             }
 
-            if (evento.type == SDL_KEYDOWN && loop == LOOP_JOGO) {
-                verificar_tecla_pressionada(&evento, &nave);
-            }
-
-            if (evento.type == SDL_KEYUP && loop == LOOP_JOGO) {
-                verificar_tecla_solta(&evento, &nave);
+            if (loop == LOOP_JOGO) {
+                personagem_evento(&evento, &jogador);
             }
 
             if (evento.type == SDL_MOUSEBUTTONDOWN && loop == LOOP_MENU) {
@@ -101,7 +96,7 @@ int main(int argc, char *args[]) {
             break;
 
             case LOOP_JOGO:
-                jogo_tela(tela, textura, &nave);
+                jogo_tela(tela, textura, &jogador);
             break;
         }
 
@@ -110,7 +105,7 @@ int main(int argc, char *args[]) {
         SDL_Delay(JANELA_DELAY);
     }
 
-    nave_liberar(&nave);
+    personagem_liberar(&jogador);
     liberar_texturas(textura);
     SDL_DestroyRenderer(tela);
     SDL_DestroyWindow(janela);
