@@ -9,7 +9,14 @@
 #define JOGO_FUNDO_LARGURA JANELA_LARGURA
 #define JOGO_FUNDO_ALTURA JANELA_ALTURA
 
-void jogo_tela(SDL_Renderer *tela, SDL_Texture *textura[], Personagem **jogador);
-void jogo_evento(SDL_Event *evento, Personagem **personagem);
+struct Jogo {
+    Personagem *jogador;
+};
+typedef struct Jogo Jogo;
+
+int jogo_inicializar(Jogo **jogo, SDL_Texture *textura[]);
+void jogo_liberar(Jogo **jogo);
+void jogo_tela(SDL_Renderer *tela, SDL_Texture *textura[], Jogo **jogo);
+void jogo_evento(SDL_Event *evento, Jogo **jogo);
 
 #endif

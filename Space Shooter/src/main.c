@@ -2,12 +2,11 @@
 #include "space_shooter.h"
 #include "menu/menu.h"
 #include "jogo/jogo.h"
-#include "jogo/personagem/personagem.h"
 
 int main(int argc, char *args[]) {
     int loop = LOOP_MENU;
 
-    Personagem *jogador = NULL;
+    Jogo *jogo = NULL;
 
     SDL_Window *janela = NULL;
     SDL_Renderer *tela = NULL;
@@ -63,8 +62,8 @@ int main(int argc, char *args[]) {
         return 4;
     }
 
-    if (personagem_criar(&jogador, textura[TEXTURA_SPRITE_PERSONAGEM_1])) {
-        puts("Erro ao criar jogador!");
+    if (jogo_inicializar(&jogo, textura)) {
+        puts("Erro ao inicializar o jogo!");
         liberar_texturas(textura);
         SDL_DestroyRenderer(tela);
         SDL_DestroyWindow(janela);
@@ -79,11 +78,11 @@ int main(int argc, char *args[]) {
             }
 
             if (loop == LOOP_JOGO) {
-                jogo_evento(&evento, &jogador);
+                jogo_evento(&evento, &jogo);
             }
 
-            if (evento.type == SDL_MOUSEBUTTONDOWN && loop == LOOP_MENU) {
-                menu_click(tela, &evento, &loop);
+            if (loop == LOOP_MENU) {
+                menu_evento(&evento, &loop);
             }
         }
 
@@ -96,7 +95,7 @@ int main(int argc, char *args[]) {
             break;
 
             case LOOP_JOGO:
-                jogo_tela(tela, textura, &jogador);
+                jogo_tela(tela, textura, &jogo);
             break;
         }
 
@@ -105,7 +104,7 @@ int main(int argc, char *args[]) {
         SDL_Delay(JANELA_DELAY);
     }
 
-    personagem_liberar(&jogador);
+    jogo_liberar(&jogo);
     liberar_texturas(textura);
     SDL_DestroyRenderer(tela);
     SDL_DestroyWindow(janela);

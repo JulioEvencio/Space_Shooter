@@ -14,6 +14,6 @@
 #define MENU_PLAY_ALTURA 128
 
 void menu_tela(SDL_Renderer *tela, SDL_Texture *textura[]);
-void menu_click(SDL_Renderer *tela, SDL_Event *evento, int *loop);
+void menu_evento(SDL_Event *evento, int *loop);
 
 #endif
