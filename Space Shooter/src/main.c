@@ -6,6 +6,7 @@
 int main(int argc, char *args[]) {
     int loop = LOOP_MENU;
 
+    Menu *menu = NULL;
     Jogo *jogo = NULL;
 
     SDL_Window *janela = NULL;
@@ -62,13 +63,25 @@ int main(int argc, char *args[]) {
         return 4;
     }
 
-    if (jogo_inicializar(&jogo, textura)) {
-        puts("Erro ao inicializar o jogo!");
+    if (menu_inicializar(&menu, textura)) {
+        puts("Erro ao inicializar menu!");
         liberar_texturas(textura);
         SDL_DestroyRenderer(tela);
         SDL_DestroyWindow(janela);
         IMG_Quit();
         SDL_Quit();
+        return 5;
+    }
+
+    if (jogo_inicializar(&jogo, textura)) {
+        puts("Erro ao inicializar o menu!");
+        menu_liberar(&menu);
+        liberar_texturas(textura);
+        SDL_DestroyRenderer(tela);
+        SDL_DestroyWindow(janela);
+        IMG_Quit();
+        SDL_Quit();
+        return 6;
     }
 
     while (loop) {
@@ -77,12 +90,12 @@ int main(int argc, char *args[]) {
                 loop = LOOP_SAIR;
             }
 
-            if (loop == LOOP_JOGO) {
-                jogo_evento(&evento, &jogo);
+            if (loop == LOOP_MENU) {
+                menu_evento(&evento, textura, &menu, &loop);
             }
 
-            if (loop == LOOP_MENU) {
-                menu_evento(&evento, &loop);
+            if (loop == LOOP_JOGO) {
+                jogo_evento(&evento, &jogo);
             }
         }
 
@@ -91,7 +104,7 @@ int main(int argc, char *args[]) {
 
         switch (loop) {
             case LOOP_MENU:
-                menu_tela(tela, textura);
+                menu_tela(tela, textura, &menu);
             break;
 
             case LOOP_JOGO:
@@ -105,6 +118,7 @@ int main(int argc, char *args[]) {
     }
 
     jogo_liberar(&jogo);
+    menu_liberar(&menu);
     liberar_texturas(textura);
     SDL_DestroyRenderer(tela);
     SDL_DestroyWindow(janela);

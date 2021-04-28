@@ -12,8 +12,17 @@
 #define MENU_PLAY_Y 150
 #define MENU_PLAY_LARGURA 192
 #define MENU_PLAY_ALTURA 128
+#define MENU_PLAY_SOLTO 0
+#define MENU_PLAY_PRESSIONADO 1
 
-void menu_tela(SDL_Renderer *tela, SDL_Texture *textura[]);
-void menu_evento(SDL_Event *evento, int *loop);
+struct Menu {
+    SDL_Texture *play;
+};
+typedef struct Menu Menu;
+
+int menu_inicializar(Menu **menu, SDL_Texture *textura[]);
+void menu_liberar(Menu **menu);
+void menu_tela(SDL_Renderer *tela, SDL_Texture *textura[], Menu **menu);
+void menu_evento(SDL_Event *evento, SDL_Texture *textura[], Menu **menu, int *loop);
 
 #endif
