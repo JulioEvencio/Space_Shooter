@@ -20,3 +20,8 @@ int nave_criar(Nave **nave, int x, int y, int largura, int altura, int velocidad
 int nave_liberar(Nave **nave) {
     free(*nave);
 }
+
+void nave_desenhar(SDL_Renderer *tela, SDL_Texture *textura, Nave **nave) {
+    SDL_Rect retangulo_nave = {(*nave)->x, (*nave)->y, (*nave)->largura, (*nave)->altura};
+    SDL_RenderCopy(tela, textura, NULL, &retangulo_nave);
+}

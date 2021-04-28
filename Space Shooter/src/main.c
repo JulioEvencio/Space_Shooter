@@ -2,9 +2,12 @@
 #include "space_shooter.h"
 #include "menu/menu.h"
 #include "jogo/jogo.h"
+#include "jogo/nave/nave.h"
 
 int main(int argc, char *args[]) {
     int loop = LOOP_MENU;
+
+    Nave *nave = NULL;
 
     SDL_Window *janela = NULL;
     SDL_Renderer *tela = NULL;
@@ -60,6 +63,16 @@ int main(int argc, char *args[]) {
         return 4;
     }
 
+    if (nave_criar(&nave, 50, 50, (32 * 3), (32 * 3), 1)) {
+        puts("Erro ao criar nave!");
+        nave_liberar(&nave);
+        liberar_texturas(textura);
+        SDL_DestroyRenderer(tela);
+        SDL_DestroyWindow(janela);
+        IMG_Quit();
+        SDL_Quit();
+    }
+
     while (loop) {
         while (SDL_PollEvent(&evento) != 0) {
             if (evento.type == SDL_QUIT) {
@@ -88,7 +101,7 @@ int main(int argc, char *args[]) {
             break;
 
             case LOOP_JOGO:
-                jogo_tela(tela, textura);
+                jogo_tela(tela, textura, &nave);
             break;
         }
 
@@ -97,6 +110,7 @@ int main(int argc, char *args[]) {
         SDL_Delay(JANELA_DELAY);
     }
 
+    nave_liberar(&nave);
     liberar_texturas(textura);
     SDL_DestroyRenderer(tela);
     SDL_DestroyWindow(janela);
