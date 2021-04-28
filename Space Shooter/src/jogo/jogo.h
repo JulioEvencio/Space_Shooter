@@ -10,5 +10,6 @@
 #define JOGO_FUNDO_ALTURA JANELA_ALTURA
 
 void jogo_tela(SDL_Renderer *tela, SDL_Texture *textura[], Personagem **jogador);
+void jogo_evento(SDL_Event *evento, Personagem **personagem);
 
 #endif

@@ -9,7 +9,7 @@
 #define PERSONAGEM_LARGURA 32 * 3
 #define PERSONAGEM_ALTURA 32 * 3
 #define PERSONAGEM_VELOCIDADE 8
-#define PERSONAGEM_VIDA 3
+#define PERSONAGEM_VIDA 1
 
 struct Personagem {
     int vida;
@@ -26,6 +26,5 @@ void personagem_subir(Personagem **personagem);
 void personagem_descer(Personagem **personagem);
 void personagem_parar_subida(Personagem **personagem);
 void personagem_parar_descida(Personagem **personagem);
-void personagem_evento(SDL_Event *evento, Personagem **personagem);
 
 #endif

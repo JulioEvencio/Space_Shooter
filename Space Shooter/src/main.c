@@ -79,7 +79,7 @@ int main(int argc, char *args[]) {
             }
 
             if (loop == LOOP_JOGO) {
-                personagem_evento(&evento, &jogador);
+                jogo_evento(&evento, &jogador);
             }
 
             if (evento.type == SDL_MOUSEBUTTONDOWN && loop == LOOP_MENU) {

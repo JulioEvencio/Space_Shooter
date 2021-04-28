@@ -1,6 +1,8 @@
 #ifndef NAVE_H_INCLUDED
 #define NAVE_H_INCLUDED
 
+#include "../../space_shooter.h"
+
 #define NAVE_MOVIMENTO_INICIAL 0
 #define NAVE_MOVER 1
 #define NAVE_PARAR 0
@@ -15,8 +17,6 @@ struct Nave {
     int movimentando_baixo;
 };
 typedef struct Nave Nave;
-
-#include "../../space_shooter.h"
 
 int nave_criar(Nave **nave, int x, int y, int largura, int altura, int velocidade);
 int nave_liberar(Nave **nave);
