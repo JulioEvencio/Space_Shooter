@@ -13,13 +13,19 @@
 #define TEXTURA_QUANTIDADE 2
 
 enum Textura {
-    SPRITE_PERSONAGEM_1,
-    SPRITE_PERSONAGEM_2
+    TEXTURA_SPRITE_PERSONAGEM_1,
+    TEXTURA_SPRITE_PERSONAGEM_2
 };
 
 static char *textura_arquivo[TEXTURA_QUANTIDADE] = {
     "../imagem/personagem1.png",
     "../imagem/personagem2.png"
+};
+
+enum Loop {
+    LOOP_SAIR,
+    LOOP_MENU,
+    LOOP_JOGO
 };
 
 int carregar_texturas(SDL_Renderer *tela, SDL_Texture *textura[]);

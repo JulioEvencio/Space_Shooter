@@ -2,7 +2,7 @@
 #include "space_shooter.h"
 
 int main(int argc, char *args[]) {
-    int loop = 1;
+    int loop = LOOP_MENU;
 
     SDL_Window *janela = NULL;
     SDL_Renderer *tela = NULL;
@@ -61,14 +61,14 @@ int main(int argc, char *args[]) {
     while (loop) {
         while (SDL_PollEvent(&evento) != 0) {
             if (evento.type == SDL_QUIT) {
-                loop = 0;
+                loop = LOOP_SAIR;
             }
 
-            if (evento.type == SDL_KEYDOWN) {
+            if (evento.type == SDL_KEYDOWN && loop == LOOP_JOGO) {
                 verificar_tecla_pressionada(&evento);
             }
 
-            if (evento.type == SDL_KEYUP) {
+            if (evento.type == SDL_KEYUP && loop == LOOP_JOGO) {
                 verificar_tecla_solta(&evento);
             }
         }
@@ -76,7 +76,15 @@ int main(int argc, char *args[]) {
         SDL_SetRenderDrawColor(tela, JANELA_COR);
         SDL_RenderClear(tela);
 
-        /*  Code */
+        switch (loop) {
+            case LOOP_MENU:
+                /*  Code */
+            break;
+
+            case LOOP_JOGO:
+                /*  Code */
+            break;
+        }
 
         SDL_RenderPresent(tela);
 
