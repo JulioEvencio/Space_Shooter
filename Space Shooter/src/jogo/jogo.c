@@ -18,7 +18,7 @@ struct Jogo {
 void jogo_verificar_tecla_pressionada(Jogo **jogo, SDL_Event *evento);
 void jogo_verificar_tecla_solta(Jogo **jogo, SDL_Event *evento);
 
-int jogo_inicializar(Jogo **jogo, SDL_Texture *textura[]) {
+int jogo_criar(Jogo **jogo, SDL_Texture *textura[]) {
     *jogo = malloc(sizeof **jogo);
 
     if (*jogo == NULL) return -1;

@@ -48,7 +48,7 @@ void personagem_liberar(Personagem **personagem) {
 }
 
 void personagem_desenhar(Personagem **personagem, SDL_Renderer *tela) {
-    nave_desenhar(tela, (*personagem)->textura, &(*personagem)->nave);
+    nave_desenhar(&(*personagem)->nave, tela, (*personagem)->textura);
 }
 
 void personagem_movimentar(Personagem **personagem) {
