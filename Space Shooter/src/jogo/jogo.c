@@ -3,6 +3,7 @@
 #include <SDL2/SDL_image.h>
 #include "../space_shooter.h"
 #include "personagem/personagem.h"
+#include "inimigo/inimigo.h"
 #include "jogo.h"
 
 #define JOGO_FUNDO_X 0
@@ -12,6 +13,7 @@
 
 struct Jogo {
     Personagem *personagem;
+    Inimigo *inimigo;
     SDL_Texture *fundo;
 };
 
@@ -28,12 +30,19 @@ int jogo_criar(Jogo **jogo, SDL_Texture *textura[]) {
         return -1;
     }
 
+    if (inimigo_criar(&(*jogo)->inimigo, textura)) {
+        personagem_liberar(&(*jogo)->personagem);
+        free(*jogo);
+        return -1;
+    }
+
     (*jogo)->fundo = textura[TEXTURA_BACKGROUND];
 
     return 0;
 }
 
 void jogo_liberar(Jogo **jogo) {
+    inimigo_liberar(&(*jogo)->inimigo);
     personagem_liberar(&(*jogo)->personagem);
     free(*jogo);
 }
@@ -44,6 +53,8 @@ void jogo_tela(Jogo **jogo, SDL_Renderer *tela) {
 
     personagem_desenhar(&(*jogo)->personagem, tela);
     personagem_movimentar(&(*jogo)->personagem);
+
+    inimigo_desenhar(&(*jogo)->inimigo, tela);
 }
 
 void jogo_evento(Jogo **jogo, SDL_Event *evento) {
