@@ -9,7 +9,7 @@ int jogo_inicializar(Jogo **jogo, SDL_Texture *textura[]) {
 
     if (*jogo == NULL) return -1;
 
-    if (personagem_criar(&(*jogo)->jogador, textura[TEXTURA_SPRITE_PERSONAGEM_1])) {
+    if (personagem_criar(&(*jogo)->jogador, textura)) {
         free(*jogo);
         return -1;
     }
@@ -28,6 +28,11 @@ void jogo_tela(SDL_Renderer *tela, SDL_Texture *textura[], Jogo **jogo) {
 
     personagem_desenhar(tela, &(*jogo)->jogador);
     personagem_movimentar(&(*jogo)->jogador);
+
+    if (!personagem_mostrar_tiro(&(*jogo)->jogador)) {
+        personagem_desenhar_tiro(tela, &(*jogo)->jogador);
+        personagem_movimentar_tiro(&(*jogo)->jogador);
+    }
 
     /*  Code */
 }
@@ -53,7 +58,9 @@ void jogo_verificar_tecla_pressionada(SDL_Event *evento, Jogo **jogo) {
             break;
 
         case SDLK_SPACE:
-            puts("tecla espaco pressionada");
+            if (personagem_mostrar_tiro(&(*jogo)->jogador)) {
+                personagem_atirar(&(*jogo)->jogador);
+            }
             break;
     }
 }
@@ -69,7 +76,7 @@ void jogo_verificar_tecla_solta(SDL_Event *evento, Jogo **jogo) {
             break;
 
         case SDLK_SPACE:
-            puts("tecla espaco solta");
+            /* puts("tecla espaco solta"); */
             break;
     }
 }
