@@ -1,9 +1,6 @@
 #ifndef SPACE_SHOOTER_INCLUDED
 #define SPACE_SHOOTER_INCLUDED
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-
 #define JANELA_NOME "Space Shooter"
 #define JANELA_LARGURA 1200
 #define JANELA_ALTURA 500

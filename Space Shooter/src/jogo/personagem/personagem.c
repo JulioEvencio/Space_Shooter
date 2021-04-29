@@ -38,7 +38,7 @@ int personagem_criar(Personagem **personagem, SDL_Texture *textura[]) {
     }
 
     (*personagem)->tiro->x = PERSONAGEM_TIRO_X;
-    (*personagem)->tiro->y = -PERSONAGEM_TIRO_Y;
+    (*personagem)->tiro->y = PERSONAGEM_TIRO_Y;
     (*personagem)->tiro->largura = PERSONAGEM_TIRO_LARGURA;
     (*personagem)->tiro->altura = PERSONAGEM_TIRO_ALTURA;
     (*personagem)->tiro->recarregado = PERSONAGEM_TIRO_RECARREGADO;

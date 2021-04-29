@@ -1,4 +1,5 @@
-#include <stdio.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "space_shooter.h"
 
 int carregar_texturas(SDL_Renderer *tela, SDL_Texture *textura[]) {

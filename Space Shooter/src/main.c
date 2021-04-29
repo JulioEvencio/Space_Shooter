@@ -1,13 +1,15 @@
 #include <stdio.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "space_shooter.h"
 #include "menu/menu.h"
-#include "jogo/jogo.h"
+//#include "jogo/jogo.h"
 
 int main(int argc, char *args[]) {
     int loop = LOOP_MENU;
 
     Menu *menu = NULL;
-    Jogo *jogo = NULL;
+    //Jogo *jogo = NULL;
 
     SDL_Window *janela = NULL;
     SDL_Renderer *tela = NULL;
@@ -63,7 +65,7 @@ int main(int argc, char *args[]) {
         return 4;
     }
 
-    if (menu_inicializar(&menu, textura)) {
+    if (menu_criar(&menu, textura)) {
         puts("Erro ao inicializar menu!");
         liberar_texturas(textura);
         SDL_DestroyRenderer(tela);
@@ -73,6 +75,7 @@ int main(int argc, char *args[]) {
         return 5;
     }
 
+    /*
     if (jogo_inicializar(&jogo, textura)) {
         puts("Erro ao inicializar o menu!");
         menu_liberar(&menu);
@@ -83,6 +86,7 @@ int main(int argc, char *args[]) {
         SDL_Quit();
         return 6;
     }
+    */
 
     while (loop) {
         while (SDL_PollEvent(&evento) != 0) {
@@ -91,12 +95,14 @@ int main(int argc, char *args[]) {
             }
 
             if (loop == LOOP_MENU) {
-                menu_evento(&evento, textura, &menu, &loop);
+                menu_evento(&menu, &evento, &loop);
             }
 
+            /*
             if (loop == LOOP_JOGO) {
                 jogo_evento(&evento, &jogo);
             }
+            */
         }
 
         SDL_SetRenderDrawColor(tela, JANELA_COR);
@@ -104,11 +110,11 @@ int main(int argc, char *args[]) {
 
         switch (loop) {
             case LOOP_MENU:
-                menu_tela(tela, textura, &menu);
+                menu_tela(&menu, tela);
             break;
 
             case LOOP_JOGO:
-                jogo_tela(tela, textura, &jogo);
+                //jogo_tela(tela, textura, &jogo);
             break;
         }
 
@@ -117,7 +123,7 @@ int main(int argc, char *args[]) {
         SDL_Delay(JANELA_DELAY);
     }
 
-    jogo_liberar(&jogo);
+    //jogo_liberar(&jogo);
     menu_liberar(&menu);
     liberar_texturas(textura);
     SDL_DestroyRenderer(tela);
