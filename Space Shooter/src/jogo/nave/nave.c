@@ -68,6 +68,14 @@ void nave_parar_descida(Nave **nave) {
     (*nave)->movimentando_baixo = NAVE_PARAR;
 }
 
+void nave_alterar_x(Nave **nave, int x) {
+    (*nave)->x = x;
+}
+
+void nave_alterar_y(Nave **nave, int y) {
+    (*nave)->y = y;
+}
+
 int nave_obter_x(Nave **nave) {
     return (*nave)->x;
 }

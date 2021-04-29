@@ -10,10 +10,11 @@
 #define JOGO_FUNDO_Y 0
 #define JOGO_FUNDO_LARGURA JANELA_LARGURA
 #define JOGO_FUNDO_ALTURA JANELA_ALTURA
+#define JOGO_INIMIGO_QUANTIDADE 3
 
 struct Jogo {
     Personagem *personagem;
-    Inimigo *inimigo;
+    Inimigo *inimigo[JOGO_INIMIGO_QUANTIDADE];
     SDL_Texture *fundo;
 };
 
@@ -30,10 +31,12 @@ int jogo_criar(Jogo **jogo, SDL_Texture *textura[]) {
         return -1;
     }
 
-    if (inimigo_criar(&(*jogo)->inimigo, textura)) {
-        personagem_liberar(&(*jogo)->personagem);
-        free(*jogo);
-        return -1;
+    for (int i = 0; i < JOGO_INIMIGO_QUANTIDADE; i++) {
+        if (inimigo_criar(&(*jogo)->inimigo[i], textura)) {
+            personagem_liberar(&(*jogo)->personagem);
+            free(*jogo);
+            return -1;
+        }
     }
 
     (*jogo)->fundo = textura[TEXTURA_BACKGROUND];
@@ -42,7 +45,9 @@ int jogo_criar(Jogo **jogo, SDL_Texture *textura[]) {
 }
 
 void jogo_liberar(Jogo **jogo) {
-    inimigo_liberar(&(*jogo)->inimigo);
+    for (int i = 0; i < JOGO_INIMIGO_QUANTIDADE; i++) {
+        inimigo_liberar(&(*jogo)->inimigo[i]);
+    }
     personagem_liberar(&(*jogo)->personagem);
     free(*jogo);
 }
@@ -54,7 +59,10 @@ void jogo_tela(Jogo **jogo, SDL_Renderer *tela) {
     personagem_desenhar(&(*jogo)->personagem, tela);
     personagem_movimentar(&(*jogo)->personagem);
 
-    inimigo_desenhar(&(*jogo)->inimigo, tela);
+    for (int i = 0; i < JOGO_INIMIGO_QUANTIDADE; i++) {
+        inimigo_desenhar(&(*jogo)->inimigo[i], tela);
+        inimigo_movimentar(&(*jogo)->inimigo[i]);
+    }
 }
 
 void jogo_evento(Jogo **jogo, SDL_Event *evento) {

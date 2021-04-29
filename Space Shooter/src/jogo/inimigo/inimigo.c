@@ -5,7 +5,7 @@
 #include "../nave/nave.h"
 #include "inimigo.h"
 
-#define INIMIGO_X 200
+#define INIMIGO_X -10
 #define INIMIGO_Y 200
 #define INIMIGO_LARGURA 32 * 3
 #define INIMIGO_ALTURA 32 * 3
@@ -84,5 +84,16 @@ void inimigo_desenhar(Inimigo **inimigo, SDL_Renderer *tela) {
 }
 
 void inimigo_movimentar(Inimigo **inimigo) {
-    /*  Code */
+    int x, y;
+
+    x = nave_obter_x(&(*inimigo)->nave) - INIMIGO_VELOCIDADE;
+    nave_alterar_x(&(*inimigo)->nave, x);
+
+    if ((x + INIMIGO_LARGURA) < 0) {
+        x = JANELA_LARGURA + (rand() % JANELA_LARGURA);
+        y = rand() % (JANELA_ALTURA - INIMIGO_ALTURA);
+
+        nave_alterar_x(&(*inimigo)->nave, x);
+        nave_alterar_y(&(*inimigo)->nave, y);
+    }
 }

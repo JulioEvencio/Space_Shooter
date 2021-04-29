@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "space_shooter.h"
@@ -15,6 +16,8 @@ int main(int argc, char *args[]) {
     SDL_Renderer *tela = NULL;
     SDL_Texture *textura[TEXTURA_QUANTIDADE];
     SDL_Event evento;
+
+    srand(time(NULL));
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         puts("Erro ao inicializar SDL 2!");
