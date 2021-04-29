@@ -1,5 +1,21 @@
-#include "stdlib.h"
+#include <stdlib.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include "../../space_shooter.h"
 #include "nave.h"
+
+#define NAVE_MOVER 1
+#define NAVE_PARAR 0
+
+struct Nave {
+    int x;
+    int y;
+    int largura;
+    int altura;
+    int velocidade;
+    int movimentando_cima;
+    int movimentando_baixo;
+};
 
 int nave_criar(Nave **nave, int x, int y, int largura, int altura, int velocidade) {
     *nave = malloc(sizeof **nave);
@@ -11,8 +27,8 @@ int nave_criar(Nave **nave, int x, int y, int largura, int altura, int velocidad
     (*nave)->largura = largura;
     (*nave)->altura = altura;
     (*nave)->velocidade = velocidade;
-    (*nave)->movimentando_cima = NAVE_MOVIMENTO_INICIAL;
-    (*nave)->movimentando_baixo = NAVE_MOVIMENTO_INICIAL;
+    (*nave)->movimentando_cima = NAVE_PARAR;
+    (*nave)->movimentando_baixo = NAVE_PARAR;
 
     return 0;
 }
@@ -21,7 +37,7 @@ int nave_liberar(Nave **nave) {
     free(*nave);
 }
 
-void nave_desenhar(SDL_Renderer *tela, SDL_Texture *textura, Nave **nave) {
+void nave_desenhar(Nave **nave, SDL_Renderer *tela, SDL_Texture *textura) {
     SDL_Rect retangulo_nave = {(*nave)->x, (*nave)->y, (*nave)->largura, (*nave)->altura};
     SDL_RenderCopy(tela, textura, NULL, &retangulo_nave);
 }
