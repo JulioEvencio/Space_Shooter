@@ -67,3 +67,11 @@ void nave_descer(Nave **nave) {
 void nave_parar_descida(Nave **nave) {
     (*nave)->movimentando_baixo = NAVE_PARAR;
 }
+
+int nave_obter_x(Nave **nave) {
+    return (*nave)->x;
+}
+
+int nave_obter_y(Nave **nave) {
+    return (*nave)->y;
+}

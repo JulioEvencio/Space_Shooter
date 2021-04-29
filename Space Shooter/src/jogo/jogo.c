@@ -67,7 +67,7 @@ void jogo_verificar_tecla_pressionada(Jogo **jogo, SDL_Event *evento) {
             break;
 
         case SDLK_SPACE:
-            /*  Code */
+            personagem_atirar(&(*jogo)->personagem);
             break;
     }
 }

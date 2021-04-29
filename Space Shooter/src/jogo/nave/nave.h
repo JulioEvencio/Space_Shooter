@@ -11,5 +11,7 @@ void nave_subir(Nave **nave);
 void nave_descer(Nave **nave);
 void nave_parar_subida(Nave **nave);
 void nave_parar_descida(Nave **nave);
+int nave_obter_x(Nave **nave);
+int nave_obter_y(Nave **nave);
 
 #endif
