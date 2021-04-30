@@ -16,5 +16,6 @@ int personagem_obter_x(Personagem **personagem);
 int personagem_obter_y(Personagem **personagem);
 int personagem_obter_largura(Personagem **personagem);
 int personagem_obter_altura(Personagem **personagem);
+int personagem_resetar(Personagem **personagem);
 
 #endif

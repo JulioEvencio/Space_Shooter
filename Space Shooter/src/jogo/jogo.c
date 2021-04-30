@@ -80,6 +80,7 @@ void jogo_tela(Jogo **jogo, SDL_Renderer *tela, int *loop) {
             *loop = LOOP_MENU;
             for (int i = 0; i < JOGO_INIMIGO_QUANTIDADE; i++) {
                 inimigo_resetar(&(*jogo)->inimigo[i]);
+                personagem_resetar(&(*jogo)->personagem);
             }
         }
     }

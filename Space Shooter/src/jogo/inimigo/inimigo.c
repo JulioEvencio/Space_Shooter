@@ -5,8 +5,8 @@
 #include "../nave/nave.h"
 #include "inimigo.h"
 
-#define INIMIGO_X JANELA_LARGURA + 200
-#define INIMIGO_Y 200
+#define INIMIGO_X JANELA_LARGURA + (rand() % JANELA_LARGURA)
+#define INIMIGO_Y rand() % (JANELA_ALTURA - INIMIGO_ALTURA)
 #define INIMIGO_LARGURA 32 * 3
 #define INIMIGO_ALTURA 32 * 3
 #define INIMIGO_VELOCIDADE 3
@@ -90,8 +90,8 @@ void inimigo_movimentar(Inimigo **inimigo) {
     nave_alterar_x(&(*inimigo)->nave, x);
 
     if ((x + INIMIGO_LARGURA) < 0) {
-        x = JANELA_LARGURA + (rand() % JANELA_LARGURA);
-        y = rand() % (JANELA_ALTURA - INIMIGO_ALTURA);
+        x = INIMIGO_X;
+        y = INIMIGO_Y;
 
         nave_alterar_x(&(*inimigo)->nave, x);
         nave_alterar_y(&(*inimigo)->nave, y);

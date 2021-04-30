@@ -146,3 +146,9 @@ int personagem_obter_largura(Personagem **personagem) {
 int personagem_obter_altura(Personagem **personagem) {
     return PERSONAGEM_ALTURA;
 }
+
+int personagem_resetar(Personagem **personagem) {
+    (*personagem)->tiro.carga = PERSONAGEM_TIRO_RECARREGADO;
+    nave_parar_subida(&(*personagem)->nave);
+    nave_parar_descida(&(*personagem)->nave);
+}
