@@ -112,8 +112,8 @@ void personagem_parar_descida(Personagem **personagem) {
 
 void personagem_atirar(Personagem **personagem) {
     if ((*personagem)->tiro.carga == PERSONAGEM_TIRO_RECARREGADO) {
-        (*personagem)->tiro.x = nave_obter_x(&(*personagem)->nave);
-        (*personagem)->tiro.y = nave_obter_y(&(*personagem)->nave);
+        (*personagem)->tiro.x = nave_obter_x(&(*personagem)->nave) + 40;
+        (*personagem)->tiro.y = nave_obter_y(&(*personagem)->nave) + 40;
         (*personagem)->tiro.carga = PERSONAGEM_TIRO_DESCARREGADO;
     }
 }
@@ -151,4 +151,24 @@ int personagem_resetar(Personagem **personagem) {
     (*personagem)->tiro.carga = PERSONAGEM_TIRO_RECARREGADO;
     nave_parar_subida(&(*personagem)->nave);
     nave_parar_descida(&(*personagem)->nave);
+}
+
+int personagem_obter_tiro_x(Personagem **personagem) {
+    return (*personagem)->tiro.x;
+}
+
+int personagem_obter_tiro_y(Personagem **personagem) {
+    return (*personagem)->tiro.y;
+}
+
+int personagem_obter_tiro_largura(Personagem **personagem) {
+    return (*personagem)->tiro.largura;
+}
+
+int personagem_obter_tiro_altura(Personagem **personagem) {
+    return (*personagem)->tiro.altura;
+}
+
+int personagem_resetar_tiro(Personagem **personagem) {
+    (*personagem)->tiro.carga = PERSONAGEM_TIRO_RECARREGADO;
 }

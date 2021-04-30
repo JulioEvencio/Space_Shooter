@@ -63,6 +63,10 @@ void jogo_tela(Jogo **jogo, SDL_Renderer *tela, int *loop) {
     personagem_movimentar(&(*jogo)->personagem);
 
     for (int i = 0; i < JOGO_INIMIGO_QUANTIDADE; i++) {
+        inimigo_desenhar(&(*jogo)->inimigo[i], tela);
+        inimigo_movimentar(&(*jogo)->inimigo[i]);
+
+        /* Personagem com inimigo */
         x1 = personagem_obter_x(&(*jogo)->personagem);
         y1 = personagem_obter_y(&(*jogo)->personagem);
         l1 = personagem_obter_largura(&(*jogo)->personagem);
@@ -73,15 +77,23 @@ void jogo_tela(Jogo **jogo, SDL_Renderer *tela, int *loop) {
         l2 = inimigo_obter_largura(&(*jogo)->inimigo[i]);
         a2 = inimigo_obter_altura(&(*jogo)->inimigo[i]);
 
-        inimigo_desenhar(&(*jogo)->inimigo[i], tela);
-        inimigo_movimentar(&(*jogo)->inimigo[i]);
-
         if (verificar_colisao(x1, y1, l1, a1, x2, y2, l2, a2)) {
             *loop = LOOP_MENU;
+            personagem_resetar(&(*jogo)->personagem);
             for (int i = 0; i < JOGO_INIMIGO_QUANTIDADE; i++) {
                 inimigo_resetar(&(*jogo)->inimigo[i]);
-                personagem_resetar(&(*jogo)->personagem);
             }
+        }
+
+        /* Tiro com inimigo */
+        x1 = personagem_obter_tiro_x(&(*jogo)->personagem);
+        y1 = personagem_obter_tiro_y(&(*jogo)->personagem);
+        l1 = personagem_obter_tiro_largura(&(*jogo)->personagem);
+        a1 = personagem_obter_tiro_altura(&(*jogo)->personagem);
+
+        if (verificar_colisao(x1, y1, l1, a1, x2, y2, l2, a2)) {
+            inimigo_resetar(&(*jogo)->inimigo[i]);
+            personagem_resetar_tiro(&(*jogo)->personagem);
         }
     }
 }
