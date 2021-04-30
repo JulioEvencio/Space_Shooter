@@ -11,8 +11,8 @@
 #define PERSONAGEM_ALTURA 32 * 3
 #define PERSONAGEM_VELOCIDADE 8
 
-#define PERSONAGEM_TIRO_X 50
-#define PERSONAGEM_TIRO_Y 50
+#define PERSONAGEM_TIRO_X -300
+#define PERSONAGEM_TIRO_Y -300
 #define PERSONAGEM_TIRO_LARGURA 11 * 3
 #define PERSONAGEM_TIRO_ALTURA 5 * 3
 #define PERSONAGEM_TIRO_VELOCIDADE 5
@@ -34,6 +34,7 @@ struct Personagem {
     Nave *nave;
     Tiro tiro;
     SDL_Texture *textura;
+    SDL_Texture *textura2;
 };
 
 void personagem_desenhar_tiro(Tiro *tiro, SDL_Renderer *tela);
@@ -69,6 +70,7 @@ int personagem_criar(Personagem **personagem, SDL_Texture *textura[]) {
     (*personagem)->tiro.textura = textura[TEXTURA_TIRO];
 
     (*personagem)->textura = textura[TEXTURA_SPRITE_PERSONAGEM_1];
+    (*personagem)->textura2 = textura[TEXTURA_SPRITE_PERSONAGEM_2];
 
     return 0;
 }
@@ -83,7 +85,25 @@ void personagem_desenhar(Personagem **personagem, SDL_Renderer *tela) {
         personagem_desenhar_tiro(&(*personagem)->tiro, tela);
     }
 
-    nave_desenhar(&(*personagem)->nave, tela, (*personagem)->textura);
+    static int controlador = 0;
+    if (controlador == 24) controlador = 0;
+    else controlador++;
+
+    if (controlador >= 0 && controlador < 6) {
+        nave_desenhar(&(*personagem)->nave, tela, (*personagem)->textura);
+    }
+
+    if (controlador >= 6 && controlador < 12) {
+        nave_desenhar(&(*personagem)->nave, tela, (*personagem)->textura);
+    }
+
+    if (controlador >= 12 && controlador < 18) {
+        nave_desenhar(&(*personagem)->nave, tela, (*personagem)->textura2);
+    }
+
+    if (controlador >= 18 && controlador <= 24) {
+        nave_desenhar(&(*personagem)->nave, tela, (*personagem)->textura2);
+    }
 }
 
 void personagem_movimentar(Personagem **personagem) {
@@ -128,6 +148,8 @@ void personagem_movimentar_tiro(Tiro *tiro) {
 
     if (tiro->x > JANELA_LARGURA) {
         tiro->carga = PERSONAGEM_TIRO_RECARREGADO;
+        tiro->x = PERSONAGEM_TIRO_X;
+        tiro->y = PERSONAGEM_TIRO_Y;
     }
 }
 
@@ -148,7 +170,7 @@ int personagem_obter_altura(Personagem **personagem) {
 }
 
 int personagem_resetar(Personagem **personagem) {
-    (*personagem)->tiro.carga = PERSONAGEM_TIRO_RECARREGADO;
+    personagem_resetar_tiro(personagem);
     nave_parar_subida(&(*personagem)->nave);
     nave_parar_descida(&(*personagem)->nave);
 }
@@ -171,4 +193,6 @@ int personagem_obter_tiro_altura(Personagem **personagem) {
 
 int personagem_resetar_tiro(Personagem **personagem) {
     (*personagem)->tiro.carga = PERSONAGEM_TIRO_RECARREGADO;
+    (*personagem)->tiro.x = PERSONAGEM_TIRO_X;
+    (*personagem)->tiro.y = PERSONAGEM_TIRO_Y;
 }
