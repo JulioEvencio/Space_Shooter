@@ -5,7 +5,7 @@ typedef struct Jogo Jogo;
 
 int jogo_criar(Jogo **jogo, SDL_Texture *textura[]);
 void jogo_liberar(Jogo **jogo);
-void jogo_tela(Jogo **jogo, SDL_Renderer *tela);
+void jogo_tela(Jogo **jogo, SDL_Renderer *tela, int *loop);
 void jogo_evento(Jogo **jogo, SDL_Event *evento);
 
 #endif

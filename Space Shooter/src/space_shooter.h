@@ -43,5 +43,6 @@ enum Loop {
 
 int carregar_texturas(SDL_Renderer *tela, SDL_Texture *textura[]);
 void liberar_texturas(SDL_Texture *textura[]);
+int verificar_colisao(int x1, int y1, int l1, int a1, int x2, int y2, int l2, int a2);
 
 #endif

@@ -12,5 +12,9 @@ void personagem_descer(Personagem **personagem);
 void personagem_parar_subida(Personagem **personagem);
 void personagem_parar_descida(Personagem **personagem);
 void personagem_atirar(Personagem **personagem);
+int personagem_obter_x(Personagem **personagem);
+int personagem_obter_y(Personagem **personagem);
+int personagem_obter_largura(Personagem **personagem);
+int personagem_obter_altura(Personagem **personagem);
 
 #endif

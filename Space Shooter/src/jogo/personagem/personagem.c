@@ -130,3 +130,19 @@ void personagem_movimentar_tiro(Tiro *tiro) {
         tiro->carga = PERSONAGEM_TIRO_RECARREGADO;
     }
 }
+
+int personagem_obter_x(Personagem **personagem) {
+    return nave_obter_x(&(*personagem)->nave);
+}
+
+int personagem_obter_y(Personagem **personagem) {
+    return nave_obter_y(&(*personagem)->nave);
+}
+
+int personagem_obter_largura(Personagem **personagem) {
+    return PERSONAGEM_LARGURA;
+}
+
+int personagem_obter_altura(Personagem **personagem) {
+    return PERSONAGEM_ALTURA;
+}

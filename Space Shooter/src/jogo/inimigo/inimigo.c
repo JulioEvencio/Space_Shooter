@@ -5,7 +5,7 @@
 #include "../nave/nave.h"
 #include "inimigo.h"
 
-#define INIMIGO_X -10
+#define INIMIGO_X JANELA_LARGURA + 200
 #define INIMIGO_Y 200
 #define INIMIGO_LARGURA 32 * 3
 #define INIMIGO_ALTURA 32 * 3
@@ -96,4 +96,24 @@ void inimigo_movimentar(Inimigo **inimigo) {
         nave_alterar_x(&(*inimigo)->nave, x);
         nave_alterar_y(&(*inimigo)->nave, y);
     }
+}
+
+int inimigo_obter_x(Inimigo **inimigo) {
+    return nave_obter_x(&(*inimigo)->nave);
+}
+
+int inimigo_obter_y(Inimigo **inimigo) {
+    return nave_obter_y(&(*inimigo)->nave);
+}
+
+int inimigo_obter_largura(Inimigo **inimigo) {
+    return INIMIGO_LARGURA;
+}
+
+int inimigo_obter_altura(Inimigo **inimigo) {
+    return INIMIGO_ALTURA;
+}
+
+void inimigo_resetar(Inimigo **inimigo) {
+    nave_alterar_x(&(*inimigo)->nave, INIMIGO_X);
 }

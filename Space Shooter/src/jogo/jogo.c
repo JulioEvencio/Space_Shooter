@@ -52,7 +52,10 @@ void jogo_liberar(Jogo **jogo) {
     free(*jogo);
 }
 
-void jogo_tela(Jogo **jogo, SDL_Renderer *tela) {
+void jogo_tela(Jogo **jogo, SDL_Renderer *tela, int *loop) {
+    int x1, y1, l1, a1;
+    int x2, y2, l2, a2;
+
     SDL_Rect fundo = {JOGO_FUNDO_X, JOGO_FUNDO_Y, JOGO_FUNDO_LARGURA, JOGO_FUNDO_ALTURA};
     SDL_RenderCopy(tela, (*jogo)->fundo, NULL, &fundo);
 
@@ -60,8 +63,25 @@ void jogo_tela(Jogo **jogo, SDL_Renderer *tela) {
     personagem_movimentar(&(*jogo)->personagem);
 
     for (int i = 0; i < JOGO_INIMIGO_QUANTIDADE; i++) {
+        x1 = personagem_obter_x(&(*jogo)->personagem);
+        y1 = personagem_obter_y(&(*jogo)->personagem);
+        l1 = personagem_obter_largura(&(*jogo)->personagem);
+        a1 = personagem_obter_altura(&(*jogo)->personagem);
+
+        x2 = inimigo_obter_x(&(*jogo)->inimigo[i]);
+        y2 = inimigo_obter_y(&(*jogo)->inimigo[i]);
+        l2 = inimigo_obter_largura(&(*jogo)->inimigo[i]);
+        a2 = inimigo_obter_altura(&(*jogo)->inimigo[i]);
+
         inimigo_desenhar(&(*jogo)->inimigo[i], tela);
         inimigo_movimentar(&(*jogo)->inimigo[i]);
+
+        if (verificar_colisao(x1, y1, l1, a1, x2, y2, l2, a2)) {
+            *loop = LOOP_MENU;
+            for (int i = 0; i < JOGO_INIMIGO_QUANTIDADE; i++) {
+                inimigo_resetar(&(*jogo)->inimigo[i]);
+            }
+        }
     }
 }
 
