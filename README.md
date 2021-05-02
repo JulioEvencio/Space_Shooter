@@ -1,4 +1,4 @@
-# Space_Shooter
+# Space Shooter
 
 Um simples joguinho de tiro espacial
 
