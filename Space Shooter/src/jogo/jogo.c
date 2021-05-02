@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "../space_shooter.h"
 #include "personagem/personagem.h"
 #include "inimigo/inimigo.h"
@@ -63,6 +64,7 @@ void jogo_tela(Jogo **jogo, SDL_Renderer *tela, int *loop) {
     personagem_movimentar(&(*jogo)->personagem);
 
     for (int i = 0; i < JOGO_INIMIGO_QUANTIDADE; i++) {
+        /* Mostrar Pontuacao */
         inimigo_desenhar(&(*jogo)->inimigo[i], tela);
         inimigo_movimentar(&(*jogo)->inimigo[i]);
 
@@ -94,6 +96,7 @@ void jogo_tela(Jogo **jogo, SDL_Renderer *tela, int *loop) {
         if (verificar_colisao(x1, y1, l1, a1, x2, y2, l2, a2)) {
             inimigo_resetar(&(*jogo)->inimigo[i]);
             personagem_resetar_tiro(&(*jogo)->personagem);
+            /* Atualizar Pontuacao */
         }
     }
 }

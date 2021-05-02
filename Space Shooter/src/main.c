@@ -2,6 +2,7 @@
 #include <time.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "space_shooter.h"
 #include "menu/menu.h"
 #include "jogo/jogo.h"
@@ -14,6 +15,7 @@ int main(int argc, char *args[]) {
 
     SDL_Window *janela = NULL;
     SDL_Renderer *tela = NULL;
+    TTF_Font *fonte = NULL;
     SDL_Texture *textura[TEXTURA_QUANTIDADE];
     SDL_Event evento;
 
@@ -27,6 +29,14 @@ int main(int argc, char *args[]) {
     if (IMG_Init(IMG_INIT_PNG) < 0) {
         puts("Erro ao inicializar SDL image!");
         SDL_Quit();
+        return 2;
+    }
+
+    if (TTF_Init() < 0) {
+        puts("Erro ao inicializar ttf!");
+        IMG_Quit();
+        SDL_Quit();
+        return 3;
     }
 
     janela = SDL_CreateWindow(
@@ -40,9 +50,10 @@ int main(int argc, char *args[]) {
 
     if (janela == NULL) {
         puts("Erro ao criar janela!");
+        TTF_Quit();
         IMG_Quit();
         SDL_Quit();
-        return 2;
+        return 4;
     }
 
     tela = SDL_CreateRenderer(
@@ -54,39 +65,58 @@ int main(int argc, char *args[]) {
     if (tela == NULL) {
         puts("Erro ao criar tela renderizada!");
         SDL_DestroyWindow(janela);
+        TTF_Quit();
         IMG_Quit();
         SDL_Quit();
-        return 3;
+        return 5;
+    }
+
+    fonte = TTF_OpenFont(FONTE_ARQUIVO, FONTE_TAMANHO);
+
+    if (fonte == NULL) {
+        puts("Erro ao abrir fonte!");
+        SDL_DestroyRenderer(tela);
+        SDL_DestroyWindow(janela);
+        TTF_Quit();
+        IMG_Quit();
+        SDL_Quit();
+        return 6;
     }
 
     if (carregar_texturas(tela, textura)) {
         puts("Erro ao carregar texturas!");
+        TTF_CloseFont(fonte);
         SDL_DestroyRenderer(tela);
         SDL_DestroyWindow(janela);
+        TTF_Quit();
         IMG_Quit();
         SDL_Quit();
-        return 4;
+        return 7;
     }
 
     if (menu_criar(&menu, textura)) {
         puts("Erro ao inicializar menu!");
         liberar_texturas(textura);
+        TTF_CloseFont(fonte);
         SDL_DestroyRenderer(tela);
         SDL_DestroyWindow(janela);
+        TTF_Quit();
         IMG_Quit();
         SDL_Quit();
-        return 5;
+        return 8;
     }
 
     if (jogo_criar(&jogo, textura)) {
         puts("Erro ao inicializar o menu!");
         menu_liberar(&menu);
         liberar_texturas(textura);
+        TTF_CloseFont(fonte);
         SDL_DestroyRenderer(tela);
         SDL_DestroyWindow(janela);
+        TTF_Quit();
         IMG_Quit();
         SDL_Quit();
-        return 6;
+        return 9;
     }
 
     while (loop) {
@@ -125,8 +155,10 @@ int main(int argc, char *args[]) {
     jogo_liberar(&jogo);
     menu_liberar(&menu);
     liberar_texturas(textura);
+    TTF_CloseFont(fonte);
     SDL_DestroyRenderer(tela);
     SDL_DestroyWindow(janela);
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
 
