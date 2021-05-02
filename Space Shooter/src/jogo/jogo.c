@@ -13,6 +13,12 @@
 #define JOGO_FUNDO_ALTURA JANELA_ALTURA
 #define JOGO_INIMIGO_QUANTIDADE 3
 
+#define TEXTO_X 0
+#define TEXTO_Y 0
+#define TEXTO_LARGURA 100
+#define TEXTO_ALTURA 30
+#define TEXTO_COR 255,0,0
+
 struct Jogo {
     Personagem *personagem;
     Inimigo *inimigo[JOGO_INIMIGO_QUANTIDADE];
@@ -53,7 +59,7 @@ void jogo_liberar(Jogo **jogo) {
     free(*jogo);
 }
 
-void jogo_tela(Jogo **jogo, SDL_Renderer *tela, int *loop) {
+void jogo_tela(Jogo **jogo, SDL_Renderer *tela, TTF_Font *fonte, int *loop) {
     int x1, y1, l1, a1;
     int x2, y2, l2, a2;
 
@@ -64,7 +70,8 @@ void jogo_tela(Jogo **jogo, SDL_Renderer *tela, int *loop) {
     personagem_movimentar(&(*jogo)->personagem);
 
     for (int i = 0; i < JOGO_INIMIGO_QUANTIDADE; i++) {
-        /* Mostrar Pontuacao */
+        exibir_texto(tela, fonte, "Teste 123", TEXTO_X, TEXTO_Y, TEXTO_LARGURA, TEXTO_ALTURA, TEXTO_COR);
+
         inimigo_desenhar(&(*jogo)->inimigo[i], tela);
         inimigo_movimentar(&(*jogo)->inimigo[i]);
 

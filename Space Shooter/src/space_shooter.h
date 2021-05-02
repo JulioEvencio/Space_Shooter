@@ -7,7 +7,7 @@
 #define JANELA_DELAY 30
 #define JANELA_COR 0, 0, 0, 255
 
-#define FONTE_ARQUIVO "../fontes/arial.ttf"
+#define FONTE_ARQUIVO "../fontes/consolas.ttf"
 #define FONTE_TAMANHO 20
 
 #define TEXTURA_QUANTIDADE 10

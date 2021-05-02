@@ -143,7 +143,7 @@ int main(int argc, char *args[]) {
             break;
 
             case LOOP_JOGO:
-                jogo_tela(&jogo, tela, &loop);
+                jogo_tela(&jogo, tela, fonte, &loop);
             break;
         }
 
