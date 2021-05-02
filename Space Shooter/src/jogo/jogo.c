@@ -53,7 +53,6 @@ int jogo_criar(Jogo **jogo, SDL_Texture *textura[]) {
     }
 
     (*jogo)->pontuacao = JOGO_PONTUACAO_INICIAL;
-    (*jogo)->pontuacao = 999999998;
     (*jogo)->fundo = textura[TEXTURA_BACKGROUND];
 
     return 0;
