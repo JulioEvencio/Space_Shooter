@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -7,6 +8,9 @@
 #include "inimigo/inimigo.h"
 #include "jogo.h"
 
+#define JOGO_PONTUACAO_TAMANHO 10
+#define JOGO_PONTUACAO_MAX 999999999
+#define JOGO_PONTUACAO_INICIAL 0
 #define JOGO_FUNDO_X 0
 #define JOGO_FUNDO_Y 0
 #define JOGO_FUNDO_LARGURA JANELA_LARGURA
@@ -20,6 +24,8 @@
 #define TEXTO_COR 255,0,0
 
 struct Jogo {
+    int pontuacao;
+    char pontuacao_texto[JOGO_PONTUACAO_TAMANHO];
     Personagem *personagem;
     Inimigo *inimigo[JOGO_INIMIGO_QUANTIDADE];
     SDL_Texture *fundo;
@@ -46,6 +52,8 @@ int jogo_criar(Jogo **jogo, SDL_Texture *textura[]) {
         }
     }
 
+    (*jogo)->pontuacao = JOGO_PONTUACAO_INICIAL;
+    (*jogo)->pontuacao = 999999998;
     (*jogo)->fundo = textura[TEXTURA_BACKGROUND];
 
     return 0;
@@ -70,7 +78,8 @@ void jogo_tela(Jogo **jogo, SDL_Renderer *tela, TTF_Font *fonte, int *loop) {
     personagem_movimentar(&(*jogo)->personagem);
 
     for (int i = 0; i < JOGO_INIMIGO_QUANTIDADE; i++) {
-        exibir_texto(tela, fonte, "Teste 123", TEXTO_X, TEXTO_Y, TEXTO_LARGURA, TEXTO_ALTURA, TEXTO_COR);
+        sprintf((*jogo)->pontuacao_texto, "%9d", (*jogo)->pontuacao);
+        exibir_texto(tela, fonte, (*jogo)->pontuacao_texto, TEXTO_X, TEXTO_Y, TEXTO_LARGURA, TEXTO_ALTURA, TEXTO_COR);
 
         inimigo_desenhar(&(*jogo)->inimigo[i], tela);
         inimigo_movimentar(&(*jogo)->inimigo[i]);
@@ -88,6 +97,7 @@ void jogo_tela(Jogo **jogo, SDL_Renderer *tela, TTF_Font *fonte, int *loop) {
 
         if (verificar_colisao(x1, y1, l1, a1, x2, y2, l2, a2)) {
             *loop = LOOP_MENU;
+            (*jogo)->pontuacao = JOGO_PONTUACAO_INICIAL;
             personagem_resetar(&(*jogo)->personagem);
             for (int i = 0; i < JOGO_INIMIGO_QUANTIDADE; i++) {
                 inimigo_resetar(&(*jogo)->inimigo[i]);
@@ -103,7 +113,12 @@ void jogo_tela(Jogo **jogo, SDL_Renderer *tela, TTF_Font *fonte, int *loop) {
         if (verificar_colisao(x1, y1, l1, a1, x2, y2, l2, a2)) {
             inimigo_resetar(&(*jogo)->inimigo[i]);
             personagem_resetar_tiro(&(*jogo)->personagem);
-            /* Atualizar Pontuacao */
+
+            (*jogo)->pontuacao++;
+
+            if ((*jogo)->pontuacao > JOGO_PONTUACAO_MAX) {
+                (*jogo)->pontuacao = JOGO_PONTUACAO_INICIAL;
+            }
         }
     }
 }
