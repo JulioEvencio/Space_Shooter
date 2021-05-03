@@ -13,5 +13,3 @@ Um simples joguinho de tiro espacial
 **Imagem 3:**
 
 ![imagem_3](https://user-images.githubusercontent.com/65574850/116824719-0d1bc300-ab62-11eb-9f60-ffc2691d2f72.png)
-
-## Em Desenvolvimento...
