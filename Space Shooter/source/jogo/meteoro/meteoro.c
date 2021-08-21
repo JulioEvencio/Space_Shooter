@@ -4,13 +4,8 @@
 #include "../../janela/janela.h"
 #include "meteoro.h"
 
-/* 34 eh a largura do meteoro */
-#define METEORO_GERAR_X rand() % (JANELA_LARGURA - 34)
+#define METEORO_GERAR_X rand() % (JANELA_LARGURA - (*meteoro)->meteoro[i].w)
 #define METEORO_GERAR_Y (rand() % JANELA_ALTURA) - JANELA_ALTURA
-
-enum Enum_Meteoro {
-    METEORO_QUANTIDADE = 5
-};
 
 enum Enum_Meteoro_Textura {
     METEORO_TEXTURA_1,
@@ -53,14 +48,14 @@ int meteoro_criar(Meteoro **meteoro, SDL_Renderer *tela, SDL_Event *evento) {
     if (*meteoro == NULL) return METEORO_SEM_MEMORIA;
 
     const char *meteoro_arquivo[METEORO_TEXTURA_QUANTIDADE] = {
-        "../sprites/Topview Sci-Fi Patreon Collection/meteoro/meteoro_0.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_1.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_2.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_3.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_4.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_5.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_6.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_7.png",
+        "sprites/Topview Sci-Fi Patreon Collection/meteoro/meteoro_0.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_1.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_2.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_3.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_4.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_5.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_6.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_7.png",
     };
 
     for (int i = 0; i < METEORO_TEXTURA_QUANTIDADE; i++) {
@@ -78,12 +73,12 @@ int meteoro_criar(Meteoro **meteoro, SDL_Renderer *tela, SDL_Event *evento) {
         SDL_FreeSurface(imagem);
     }
 
-    meteoro_resetar(meteoro);
-
     (*meteoro)->evento = evento;
     (*meteoro)->tela = tela;
     (*meteoro)->movimento.velocidade_x = 2;
     (*meteoro)->movimento.velocidade_y = 6;
+
+    meteoro_resetar(meteoro);
 
     return METEORO_SUCESSO;
 }

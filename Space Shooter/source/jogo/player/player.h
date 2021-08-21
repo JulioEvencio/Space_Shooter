@@ -1,6 +1,12 @@
 #ifndef PLAYER_H_INCLUDED
 #define PLAYER_H_INCLUDED
 
+enum Enum_Player {
+    PLAYER_CONTINUE,
+    PLAYER_GAME_OVER,
+    PLAYER_TIRO_QUANTIDADE = 6
+};
+
 enum Enum_Player_Erro {
     PLAYER_SUCESSO,
     PLAYER_SEM_MEMORIA,

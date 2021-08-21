@@ -5,7 +5,7 @@
 #include "menu/menu.h"
 #include "jogo/jogo.h"
 
-int main(void) {
+int main(int argc, char *argv[]) {
     int loop = JANELA_MENU;
 
     Menu *menu;

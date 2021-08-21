@@ -4,10 +4,6 @@
 #include "../../../janela/janela.h"
 #include "tiro.h"
 
-enum Enum_Tiro {
-    TIRO_QUANTIDADE = 6
-};
-
 enum Enum_Tiro_Textura {
     TIRO_TEXTURA_1,
     TIRO_TEXTURA_2,
@@ -38,8 +34,8 @@ int tiro_criar(Tiro **tiro, SDL_Renderer *tela, SDL_Event *evento) {
     if (*tiro == NULL) return TIRO_SEM_MEMORIA;
 
     const char *tiro_arquivo[TIRO_TEXTURA_QUANTIDADE] = {
-        "../sprites/Topview Sci-Fi Patreon Collection/tiro/tiro_0.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/tiro/tiro_1.png"
+        "sprites/Topview Sci-Fi Patreon Collection/tiro/tiro_0.png",
+        "sprites/Topview Sci-Fi Patreon Collection/tiro/tiro_1.png"
     };
 
     for (int i = 0; i < TIRO_TEXTURA_QUANTIDADE; i++) {
@@ -61,18 +57,9 @@ int tiro_criar(Tiro **tiro, SDL_Renderer *tela, SDL_Event *evento) {
     (*tiro)->tela = tela;
     (*tiro)->movimento.velocidade_x = 2;
     (*tiro)->movimento.velocidade_y = 10;
-    (*tiro)->movimento.direita = 0;
-    (*tiro)->movimento.esquerda = 0;
     (*tiro)->movimento.invalido = -999;
 
-    for (int i = 0; i < TIRO_QUANTIDADE; i++) {
-        (*tiro)->sprite[i] = TIRO_TEXTURA_1;
-
-        (*tiro)->tiro[i].x = (*tiro)->movimento.invalido;
-        (*tiro)->tiro[i].y = (*tiro)->movimento.invalido;
-        (*tiro)->tiro[i].w = 16;
-        (*tiro)->tiro[i].h = 16;
-    }
+    tiro_resetar(tiro);
 
     return TIRO_SUCESSO;
 }
@@ -139,7 +126,11 @@ void tiro_resetar(Tiro **tiro) {
     (*tiro)->movimento.esquerda = 0;
 
     for (int i = 0; i < TIRO_QUANTIDADE; i++) {
+        (*tiro)->sprite[i] = TIRO_TEXTURA_1;
+
         (*tiro)->tiro[i].x = (*tiro)->movimento.invalido;
         (*tiro)->tiro[i].y = (*tiro)->movimento.invalido;
+        (*tiro)->tiro[i].w = 16;
+        (*tiro)->tiro[i].h = 16;
     }
 }

@@ -44,15 +44,15 @@ int player_criar(Player **player, SDL_Renderer *tela, SDL_Event *evento) {
     if (*player == NULL) return PLAYER_SEM_MEMORIA;
 
     const char *player_arquivo[PLAYER_TEXTURA_QUANTIDADE] = {
-        "../sprites/Topview Sci-Fi Patreon Collection/player/player_0.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/player/player_1.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_1.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_2.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_3.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_4.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_5.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_6.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_7.png",
+        "sprites/Topview Sci-Fi Patreon Collection/player/player_0.png",
+        "sprites/Topview Sci-Fi Patreon Collection/player/player_1.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_1.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_2.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_3.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_4.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_5.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_6.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_7.png",
     };
 
     for (int i = 0; i < PLAYER_TEXTURA_QUANTIDADE; i++) {
@@ -105,7 +105,7 @@ int player_logica(Player **player) {
     SDL_RenderCopy((*player)->tela, (*player)->textura[(*player)->sprite++], NULL, &(*player)->player);
 
     if ((*player)->explodiu) {
-        if ((*player)->sprite == PLAYER_TEXTURA_QUANTIDADE) return 1;
+        if ((*player)->sprite == PLAYER_TEXTURA_QUANTIDADE) return PLAYER_GAME_OVER;
     } else {
         if ((*player)->sprite == PLAYER_TEXTURA_EXPLOSAO_1) (*player)->sprite = PLAYER_TEXTURA_1;
 
@@ -118,7 +118,7 @@ int player_logica(Player **player) {
         if ((*player)->movimento.esquerda && (*player)->player.x > 0) (*player)->player.x -= (*player)->movimento.velocidade;
     }
 
-    return 0;
+    return PLAYER_CONTINUE;
 }
 
 void player_evento(Player **player) {

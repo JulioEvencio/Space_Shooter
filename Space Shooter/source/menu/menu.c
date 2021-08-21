@@ -21,18 +21,15 @@ struct Menu {
     SDL_Texture *textura[MENU_TEXTURA_QUANTIDADE];
 };
 
-void menu_click_pressionado(Menu **menu);
-void menu_click_solto(Menu **menu);
-
 int menu_criar(Menu **menu, SDL_Renderer *tela, SDL_Event *evento) {
     *menu = malloc(sizeof **menu);
 
     if (*menu == NULL) return MENU_SEM_MEMORIA;
 
     const char *menu_arquivo[MENU_TEXTURA_QUANTIDADE] = {
-        "../sprites/Talosaurus - Open Game Art/menu/play.png",
-        "../sprites/Talosaurus - Open Game Art/menu/play_pressionado.png",
-        "../sprites/Topview Sci-Fi Patreon Collection/fundo/fundo.png"
+        "sprites/Talosaurus - Open Game Art/menu/play.png",
+        "sprites/Talosaurus - Open Game Art/menu/play_pressionado.png",
+        "sprites/Topview Sci-Fi Patreon Collection/fundo/fundo.png"
     };
 
     for (int i = 0; i < MENU_TEXTURA_QUANTIDADE; i++) {
@@ -60,8 +57,8 @@ int menu_criar(Menu **menu, SDL_Renderer *tela, SDL_Event *evento) {
     (*menu)->fundo.w = JANELA_LARGURA;
     (*menu)->fundo.h = JANELA_ALTURA;
 
-    (*menu)->play.w = 192;
-    (*menu)->play.h = 128;
+    (*menu)->play.w = 96;
+    (*menu)->play.h = 64;
     (*menu)->play.x = JANELA_LARGURA / 2 - (*menu)->play.w / 2;
     (*menu)->play.y = JANELA_ALTURA / 2 - (*menu)->play.h / 2;
 
@@ -91,32 +88,27 @@ int menu_logica(Menu **menu) {
 
 void menu_evento(Menu **menu) {
     if ((*menu)->evento->type == SDL_MOUSEBUTTONDOWN) {
-        menu_click_pressionado(menu);
+        if (
+            (*menu)->evento->motion.x > (*menu)->play.x &&
+            (*menu)->evento->motion.x < ((*menu)->play.x + (*menu)->play.w) &&
+            (*menu)->evento->motion.y > (*menu)->play.y &&
+            (*menu)->evento->motion.y < ((*menu)->play.y + (*menu)->play.h)
+        )
+        {
+            (*menu)->sprite = MENU_TEXTURA_PLAY_PRESSIONADO;
+        }
     }
 
     if ((*menu)->evento->type == SDL_MOUSEBUTTONUP) {
         (*menu)->sprite = MENU_TEXTURA_PLAY;
-        menu_click_solto(menu);
-    }
-}
 
-void menu_click_pressionado(Menu **menu) {
-    int coluna_mouse = (*menu)->evento->motion.x;
-    int linha_mouse = (*menu)->evento->motion.y;
-
-    if (coluna_mouse > (*menu)->play.x && coluna_mouse < ((*menu)->play.x + (*menu)->play.w)) {
-        if (linha_mouse > (*menu)->play.y && linha_mouse < ((*menu)->play.y + (*menu)->play.h)) {
-            (*menu)->sprite = MENU_TEXTURA_PLAY_PRESSIONADO;
-        }
-    }
-}
-
-void menu_click_solto(Menu **menu) {
-    int coluna_mouse = (*menu)->evento->motion.x;
-    int linha_mouse = (*menu)->evento->motion.y;
-
-    if (coluna_mouse > (*menu)->play.x && coluna_mouse < ((*menu)->play.x + (*menu)->play.w)) {
-        if (linha_mouse > (*menu)->play.y && linha_mouse < ((*menu)->play.y + (*menu)->play.h)) {
+        if (
+            (*menu)->evento->motion.x > (*menu)->play.x &&
+            (*menu)->evento->motion.x < ((*menu)->play.x + (*menu)->play.w) &&
+            (*menu)->evento->motion.y > (*menu)->play.y &&
+            (*menu)->evento->motion.y < ((*menu)->play.y + (*menu)->play.h)
+        )
+        {
             (*menu)->jogar = 1;
         }
     }

@@ -15,6 +15,6 @@ void fundo_liberar(Fundo **fundo);
 void fundo_logica(Fundo **fundo);
 void fundo_evento(Fundo **fundo);
 
-void fundo_resetar_movimento(Fundo **fundo);
+void fundo_resetar(Fundo **fundo);
 
 #endif

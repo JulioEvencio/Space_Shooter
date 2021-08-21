@@ -1,6 +1,10 @@
 #ifndef METEORO_H_INCLUDED
 #define METEORO_H_INCLDUED
 
+enum Enum_Meteoro {
+    METEORO_QUANTIDADE = 5
+};
+
 enum Enum_Meteoro_Erro {
     METEORO_SUCESSO,
     METEORO_SEM_MEMORIA,

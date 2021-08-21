@@ -38,7 +38,7 @@ int fundo_criar(Fundo **fundo, SDL_Renderer *tela, SDL_Event *evento) {
 
     if (*fundo == NULL) return FUNDO_SEM_MEMORIA;
 
-    SDL_Surface *imagem = IMG_Load("../sprites/Topview Sci-Fi Patreon Collection/fundo/fundo.png");
+    SDL_Surface *imagem = IMG_Load("sprites/Topview Sci-Fi Patreon Collection/fundo/fundo.png");
 
     if (imagem == NULL) {
         free(*fundo);
@@ -60,16 +60,7 @@ int fundo_criar(Fundo **fundo, SDL_Renderer *tela, SDL_Event *evento) {
     (*fundo)->evento = evento;
     (*fundo)->movimento.velocidade = 2;
 
-    (*fundo)->fundo[FUNDO_1].x = FUNDO_RESET_ESQUERDA;
-    (*fundo)->fundo[FUNDO_2].x = FUNDO_RESET_ESQUERDA;
-
-    (*fundo)->fundo[FUNDO_3].x = 0;
-    (*fundo)->fundo[FUNDO_4].x = 0;
-
-    (*fundo)->fundo[FUNDO_5].x = FUNDO_RESET_DIREITA;
-    (*fundo)->fundo[FUNDO_6].x = FUNDO_RESET_DIREITA;
-
-    fundo_resetar_movimento(fundo);
+    fundo_resetar(fundo);
 
     return FUNDO_SUCESSO;
 }
@@ -115,7 +106,16 @@ void fundo_evento(Fundo **fundo) {
     }
 }
 
-void fundo_resetar_movimento(Fundo **fundo) {
+void fundo_resetar(Fundo **fundo) {
     (*fundo)->movimento.direita = 0;
     (*fundo)->movimento.esquerda = 0;
+
+    (*fundo)->fundo[FUNDO_1].x = FUNDO_RESET_ESQUERDA;
+    (*fundo)->fundo[FUNDO_2].x = FUNDO_RESET_ESQUERDA;
+
+    (*fundo)->fundo[FUNDO_3].x = 0;
+    (*fundo)->fundo[FUNDO_4].x = 0;
+
+    (*fundo)->fundo[FUNDO_5].x = FUNDO_RESET_DIREITA;
+    (*fundo)->fundo[FUNDO_6].x = FUNDO_RESET_DIREITA;
 }

@@ -1,6 +1,10 @@
 #ifndef TIRO_H_INCLUDED
 #define TIRO_H_INCLUDED
 
+enum Enum_Tiro {
+    TIRO_QUANTIDADE = 6
+};
+
 enum Enum_Tiro_Erro {
     TIRO_SUCESSO,
     TIRO_SEM_MEMORIA,

@@ -81,11 +81,9 @@ void jogo_colisao(Jogo **jogo) {
     SDL_Rect *tiro = player_obter_tiro(&(*jogo)->player);
     SDL_Rect *meteoro = meteoro_obter(&(*jogo)->meteoro);
 
-    /* 5 eh o numero de meteoros */
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < METEORO_QUANTIDADE; i++) {
         /* Meteoro vs Tiro */
-        /* 6 eh o numero de tiros */
-        for (int j = 0; j < 6; j++) {
+        for (int j = 0; j < PLAYER_TIRO_QUANTIDADE; j++) {
             if (
                 tiro[j].x < meteoro[i].x + meteoro[i].w &&
                 tiro[j].x + tiro[j].w > meteoro[i].x &&
@@ -112,7 +110,7 @@ void jogo_colisao(Jogo **jogo) {
 }
 
 void jogo_resetar(Jogo **jogo) {
-    fundo_resetar_movimento(&(*jogo)->fundo);
+    fundo_resetar(&(*jogo)->fundo);
 
     meteoro_resetar(&(*jogo)->meteoro);
 
