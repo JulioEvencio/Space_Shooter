@@ -13,12 +13,13 @@ struct Jogo {
     Meteoro *meteoro;
     Player *player;
     Pontuacao *pontuacao;
+    SDL_Window *janela;
 };
 
 void jogo_colisao(Jogo **jogo);
 void jogo_resetar(Jogo **jogo);
 
-int jogo_criar(Jogo **jogo, SDL_Renderer *tela, SDL_Event *evento) {
+int jogo_criar(Jogo **jogo, SDL_Window *janela, SDL_Renderer *tela, SDL_Event *evento) {
     *jogo = malloc(sizeof **jogo);
 
     if (*jogo == NULL) return JOGO_SEM_MEMORIA;
@@ -49,6 +50,8 @@ int jogo_criar(Jogo **jogo, SDL_Renderer *tela, SDL_Event *evento) {
         return JOGO_ERRO_AO_CARREGAR_PONTUACAO;
     }
 
+    (*jogo)->janela = janela;
+
     return JOGO_SUCESSO;
 }
 
@@ -66,7 +69,7 @@ int jogo_logica(Jogo **jogo) {
     meteoro_logica(&(*jogo)->meteoro);
 
     if (player_logica(&(*jogo)->player)) {
-        if (SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Game Over", "You died!", NULL))
+        if (SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Game Over", "You died!", (*jogo)->janela))
             SDL_Log("%s", SDL_GetError());
 
         jogo_resetar(jogo);

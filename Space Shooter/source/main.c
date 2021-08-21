@@ -47,6 +47,15 @@ int main(int argc, char *argv[]) {
         return 3;
     }
 
+    {
+        SDL_Surface *icone = IMG_Load("sprites/Topview Sci-Fi Patreon Collection/player/player_0.png");
+
+        if (icone != NULL) {
+            SDL_SetWindowIcon(janela, icone);
+            SDL_FreeSurface(icone);
+        }
+    }
+
     tela = SDL_CreateRenderer(
         janela,
         -1,
@@ -72,7 +81,7 @@ int main(int argc, char *argv[]) {
         return 5;
     }
 
-    if (jogo_criar(&jogo, tela, &evento)) {
+    if (jogo_criar(&jogo, janela, tela, &evento)) {
         if (SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erro!", "Erro ao inicializar jogo!", NULL) < 0)
             SDL_Log("%s", SDL_GetError());
         menu_liberar(&menu);

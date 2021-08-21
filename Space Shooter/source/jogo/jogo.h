@@ -13,7 +13,7 @@ enum Enum_Jogo_Erro {
 
 typedef struct Jogo Jogo;
 
-int jogo_criar(Jogo **jogo, SDL_Renderer *tela, SDL_Event *evento);
+int jogo_criar(Jogo **jogo, SDL_Window *janela, SDL_Renderer *tela, SDL_Event *evento);
 void jogo_liberar(Jogo **jogo);
 
 int jogo_logica(Jogo **jogo);
