@@ -55,7 +55,7 @@ int meteoro_criar(Meteoro **meteoro, SDL_Renderer *tela, SDL_Event *evento) {
         "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_4.png",
         "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_5.png",
         "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_6.png",
-        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_7.png",
+        "sprites/Topview Sci-Fi Patreon Collection/explosao/explosao_7.png"
     };
 
     for (int i = 0; i < METEORO_TEXTURA_QUANTIDADE; i++) {
