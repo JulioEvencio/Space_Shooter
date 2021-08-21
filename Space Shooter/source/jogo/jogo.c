@@ -5,12 +5,14 @@
 #include "fundo/fundo.h"
 #include "meteoro/meteoro.h"
 #include "player/player.h"
+#include "pontuacao/pontuacao.h"
 #include "jogo.h"
 
 struct Jogo {
     Fundo *fundo;
     Meteoro *meteoro;
     Player *player;
+    Pontuacao *pontuacao;
 };
 
 void jogo_colisao(Jogo **jogo);
@@ -39,10 +41,19 @@ int jogo_criar(Jogo **jogo, SDL_Renderer *tela, SDL_Event *evento) {
         return JOGO_ERRO_AO_CARREGAR_PLAYER;
     }
 
+    if (pontuacao_criar(&(*jogo)->pontuacao, tela)) {
+        player_liberar(&(*jogo)->player);
+        meteoro_liberar(&(*jogo)->meteoro);
+        fundo_liberar(&(*jogo)->fundo);
+        free(*jogo);
+        return JOGO_ERRO_AO_CARREGAR_PONTUACAO;
+    }
+
     return JOGO_SUCESSO;
 }
 
 void jogo_liberar(Jogo **jogo) {
+    pontuacao_liberar(&(*jogo)->pontuacao);
     player_liberar(&(*jogo)->player);
     meteoro_liberar(&(*jogo)->meteoro);
     fundo_liberar(&(*jogo)->fundo);
@@ -64,6 +75,8 @@ int jogo_logica(Jogo **jogo) {
     }
 
     jogo_colisao(jogo);
+
+    pontuacao_logica(&(*jogo)->pontuacao);
 
     return JANELA_JOGO;
 }
@@ -92,6 +105,7 @@ void jogo_colisao(Jogo **jogo) {
             ) {
                 meteoro_colisao(&(*jogo)->meteoro, i);
                 player_colisao_tiro(&(*jogo)->player, j);
+                pontuacao_incrementar(&(*jogo)->pontuacao);
                 break;
             }
         }
@@ -115,4 +129,6 @@ void jogo_resetar(Jogo **jogo) {
     meteoro_resetar(&(*jogo)->meteoro);
 
     player_resetar(&(*jogo)->player);
+
+    pontuacao_resetar(&(*jogo)->pontuacao);
 }
