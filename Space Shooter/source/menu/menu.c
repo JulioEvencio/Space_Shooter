@@ -27,8 +27,8 @@ int menu_criar(Menu **menu, SDL_Renderer *tela, SDL_Event *evento) {
     if (*menu == NULL) return MENU_SEM_MEMORIA;
 
     const char *menu_arquivo[MENU_TEXTURA_QUANTIDADE] = {
-        "sprites/Talosaurus - Open Game Art/menu/play.png",
-        "sprites/Talosaurus - Open Game Art/menu/play_pressionado.png",
+        "sprites/Simple Smooth Menu Buttons/menu/play.png",
+        "sprites/Simple Smooth Menu Buttons/menu/play_pressionado.png",
         "sprites/Topview Sci-Fi Patreon Collection/fundo/fundo.png"
     };
 
