@@ -1,6 +1,7 @@
 #include <time.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 #include "janela/janela.h"
 #include "menu/menu.h"
 #include "jogo/jogo.h"
@@ -17,7 +18,7 @@ int main(int argc, char *argv[]) {
 
     srand(time(NULL));
 
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         if (SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erro!", "Erro ao iniciar SDL!", NULL) < 0)
             SDL_Log("%s", SDL_GetError());
         return 1;
@@ -28,6 +29,14 @@ int main(int argc, char *argv[]) {
             SDL_Log("%s", SDL_GetError());
         SDL_Quit();
         return 2;
+    }
+
+    if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) < 0) {
+        if (SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erro!", "Erro ao iniciar MIX!", NULL) < 0)
+            SDL_Log("%s", SDL_GetError());
+        IMG_Quit();
+        SDL_Quit();
+        return 3;
     }
 
     janela = SDL_CreateWindow(
@@ -42,9 +51,10 @@ int main(int argc, char *argv[]) {
     if (janela == NULL) {
         if (SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erro!", "Erro ao criar janela!", NULL) < 0)
             SDL_Log("%s", SDL_GetError());
+        Mix_CloseAudio();
         IMG_Quit();
         SDL_Quit();
-        return 3;
+        return 4;
     }
 
     {
@@ -66,9 +76,10 @@ int main(int argc, char *argv[]) {
         if (SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Erro!", "Erro ao renderizar tela!", NULL) < 0)
             SDL_Log("%s", SDL_GetError());
         SDL_DestroyWindow(janela);
+        Mix_CloseAudio();
         IMG_Quit();
         SDL_Quit();
-        return 4;
+        return 5;
     }
 
     if (menu_criar(&menu, tela, &evento)) {
@@ -76,9 +87,10 @@ int main(int argc, char *argv[]) {
             SDL_Log("%s", SDL_GetError());
         SDL_DestroyRenderer(tela);
         SDL_DestroyWindow(janela);
+        Mix_CloseAudio();
         IMG_Quit();
         SDL_Quit();
-        return 5;
+        return 6;
     }
 
     if (jogo_criar(&jogo, janela, tela, &evento)) {
@@ -87,9 +99,10 @@ int main(int argc, char *argv[]) {
         menu_liberar(&menu);
         SDL_DestroyRenderer(tela);
         SDL_DestroyWindow(janela);
+        Mix_CloseAudio();
         IMG_Quit();
         SDL_Quit();
-        return 6;
+        return 7;
     }
 
     while (loop) {
@@ -125,6 +138,7 @@ int main(int argc, char *argv[]) {
     menu_liberar(&menu);
     SDL_DestroyRenderer(tela);
     SDL_DestroyWindow(janela);
+    Mix_CloseAudio();
     IMG_Quit();
     SDL_Quit();
 

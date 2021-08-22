@@ -4,7 +4,8 @@
 enum Enum_Menu_Erro {
     MENU_SUCESSO,
     MENU_SEM_MEMORIA,
-    MENU_ERRO_AO_CARREGAR_IMAGEM
+    MENU_ERRO_AO_CARREGAR_IMAGEM,
+    MENU_ERRO_AO_CARREGAR_MUSICA
 };
 
 typedef struct Menu Menu;

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 #include "../janela/janela.h"
 #include "menu.h"
 
@@ -18,6 +19,7 @@ struct Menu {
     SDL_Rect play;
     SDL_Event *evento;
     SDL_Renderer *tela;
+    Mix_Music *musica;
     SDL_Texture *textura[MENU_TEXTURA_QUANTIDADE];
 };
 
@@ -47,6 +49,18 @@ int menu_criar(Menu **menu, SDL_Renderer *tela, SDL_Event *evento) {
         SDL_FreeSurface(imagem);
     }
 
+    (*menu)->musica = Mix_LoadMUS("sounds/fundo/580898__bloodpixelhero__in-game.wav");
+
+    if ((*menu)->musica == NULL) {
+        for (int i = 0; i < MENU_TEXTURA_QUANTIDADE; i++) {
+            SDL_DestroyTexture((*menu)->textura[i]);
+        }
+
+        free(*menu);
+
+        return MENU_ERRO_AO_CARREGAR_MUSICA;
+    }
+
     (*menu)->jogar = 0;
     (*menu)->evento = evento;
     (*menu)->tela = tela;
@@ -66,6 +80,8 @@ int menu_criar(Menu **menu, SDL_Renderer *tela, SDL_Event *evento) {
 }
 
 void menu_liberar(Menu **menu) {
+    Mix_FreeMusic((*menu)->musica);
+
     for (int i = 0; i < MENU_TEXTURA_QUANTIDADE; i++) {
         SDL_DestroyTexture((*menu)->textura[i]);
     }
@@ -74,12 +90,17 @@ void menu_liberar(Menu **menu) {
 }
 
 int menu_logica(Menu **menu) {
+    if (!Mix_PlayingMusic()) Mix_PlayMusic((*menu)->musica, -1);
+
     SDL_RenderCopy((*menu)->tela, (*menu)->textura[MENU_TEXTURA_FUNDO], NULL, &(*menu)->fundo);
 
     SDL_RenderCopy((*menu)->tela, (*menu)->textura[(*menu)->sprite], NULL, &(*menu)->play);
 
     if ((*menu)->jogar) {
         (*menu)->jogar = 0;
+
+        if (Mix_PlayingMusic()) Mix_HaltMusic();
+
         return JANELA_JOGO;
     }
 
