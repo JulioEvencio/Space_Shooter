@@ -8,7 +8,8 @@ enum Enum_Meteoro {
 enum Enum_Meteoro_Erro {
     METEORO_SUCESSO,
     METEORO_SEM_MEMORIA,
-    METEORO_ERRO_AO_CARREGAR_IMAGEM
+    METEORO_ERRO_AO_CARREGAR_IMAGEM,
+    METEORO_ERRO_AO_CARREGAR_AUDIO
 };
 
 typedef struct Meteoro Meteoro;

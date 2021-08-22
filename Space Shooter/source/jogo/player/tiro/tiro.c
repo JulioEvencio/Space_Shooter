@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 #include "../../../janela/janela.h"
 #include "tiro.h"
 
@@ -25,6 +26,7 @@ struct Tiro {
     SDL_Rect tiro[TIRO_QUANTIDADE];
     SDL_Event *evento;
     SDL_Renderer *tela;
+    Mix_Chunk *audio;
     SDL_Texture *textura[TIRO_TEXTURA_QUANTIDADE];
 };
 
@@ -53,6 +55,18 @@ int tiro_criar(Tiro **tiro, SDL_Renderer *tela, SDL_Event *evento) {
         SDL_FreeSurface(imagem);
     }
 
+    (*tiro)->audio = Mix_LoadWAV("sounds/laser/339169__debsound__arcade-laser-014.wav");
+
+    if ((*tiro)->audio == NULL) {
+        for (int i = 0; i < TIRO_TEXTURA_QUANTIDADE; i++) {
+            SDL_DestroyTexture((*tiro)->textura[i]);
+        }
+
+        free(*tiro);
+
+        return TIRO_ERRO_AO_CARREGAR_AUDIO;
+    }
+
     (*tiro)->evento = evento;
     (*tiro)->tela = tela;
     (*tiro)->movimento.velocidade_x = 2;
@@ -65,6 +79,8 @@ int tiro_criar(Tiro **tiro, SDL_Renderer *tela, SDL_Event *evento) {
 }
 
 void tiro_liberar(Tiro **tiro) {
+    Mix_FreeChunk((*tiro)->audio);
+
     for (int i = 0; i < TIRO_TEXTURA_QUANTIDADE; i++) {
         SDL_DestroyTexture((*tiro)->textura[i]);
     }
@@ -106,6 +122,8 @@ void tiro_evento(Tiro **tiro) {
 void tiro_atirar(Tiro **tiro, int x, int y) {
     for (int i = 0; i < TIRO_QUANTIDADE; i++) {
         if ((*tiro)->tiro[i].y == (*tiro)->movimento.invalido) {
+            Mix_PlayChannel(-1, (*tiro)->audio, 0);
+
             (*tiro)->tiro[i].x = x;
             (*tiro)->tiro[i].y = y;
             break;

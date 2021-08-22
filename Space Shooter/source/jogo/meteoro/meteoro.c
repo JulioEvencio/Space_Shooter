@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 #include "../../janela/janela.h"
 #include "meteoro.h"
 
@@ -39,6 +40,7 @@ struct Meteoro {
     SDL_Rect meteoro[METEORO_QUANTIDADE];
     SDL_Event *evento;
     SDL_Renderer *tela;
+    Mix_Chunk *audio;
     SDL_Texture *textura[METEORO_TEXTURA_QUANTIDADE];
 };
 
@@ -73,6 +75,18 @@ int meteoro_criar(Meteoro **meteoro, SDL_Renderer *tela, SDL_Event *evento) {
         SDL_FreeSurface(imagem);
     }
 
+    (*meteoro)->audio = Mix_LoadWAV("sounds/explosao/435416__v-ktor__explosion13.wav");
+
+    if ((*meteoro)->audio == NULL) {
+        for (int i = 0; i < METEORO_TEXTURA_QUANTIDADE; i++) {
+            SDL_DestroyTexture((*meteoro)->textura[i]);
+        }
+
+        free(*meteoro);
+
+        return METEORO_ERRO_AO_CARREGAR_AUDIO;
+    }
+
     (*meteoro)->evento = evento;
     (*meteoro)->tela = tela;
     (*meteoro)->movimento.velocidade_x = 2;
@@ -84,6 +98,8 @@ int meteoro_criar(Meteoro **meteoro, SDL_Renderer *tela, SDL_Event *evento) {
 }
 
 void meteoro_liberar(Meteoro **meteoro) {
+    Mix_FreeChunk((*meteoro)->audio);
+
     for (int i = 0; i < METEORO_TEXTURA_QUANTIDADE; i++) {
         SDL_DestroyTexture((*meteoro)->textura[i]);
     }
@@ -143,6 +159,8 @@ SDL_Rect *meteoro_obter(Meteoro **meteoro) {
 }
 
 void meteoro_colisao(Meteoro **meteoro, int i) {
+    Mix_PlayChannel(-1, (*meteoro)->audio, 0);
+
     (*meteoro)->sprites[i].explodiu = 1;
     (*meteoro)->meteoro[i].y -= 100;
     (*meteoro)->meteoro[i].w = 80;

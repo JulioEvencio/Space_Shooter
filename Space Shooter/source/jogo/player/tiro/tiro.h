@@ -8,7 +8,8 @@ enum Enum_Tiro {
 enum Enum_Tiro_Erro {
     TIRO_SUCESSO,
     TIRO_SEM_MEMORIA,
-    TIRO_ERRO_AO_CARREGAR_IMAGEM
+    TIRO_ERRO_AO_CARREGAR_IMAGEM,
+    TIRO_ERRO_AO_CARREGAR_AUDIO
 };
 
 typedef struct Tiro Tiro;
