@@ -1,6 +1,5 @@
 #include <stdlib.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL.h>
 #include "../janela/janela.h"
 #include "fundo/fundo.h"
 #include "meteoro/meteoro.h"

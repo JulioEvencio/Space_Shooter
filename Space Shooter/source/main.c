@@ -1,7 +1,7 @@
 #include <time.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
 #include "janela/janela.h"
 #include "menu/menu.h"
 #include "jogo/jogo.h"
@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
     }
 
     while (loop) {
-        while (SDL_PollEvent(&evento) != 0) {
+        while (SDL_PollEvent(&evento)) {
             if (evento.type == SDL_QUIT) loop = JANELA_SAIR;
 
             switch (loop) {

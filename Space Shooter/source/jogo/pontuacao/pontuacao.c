@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL.h>
+#include <SDL_image.h>
 #include "../../janela/janela.h"
 #include "pontuacao.h"
 
@@ -8,8 +8,10 @@ enum Enum_Pontuacao {
     PONTUACAO_DIGITO_1,
     PONTUACAO_DIGITO_2,
     PONTUACAO_DIGITO_3,
-    PONTUACAO_DIGITOS = 3,
-    PONTUACAO_MAXIMA = 999
+    PONTUACAO_DIGITO_4,
+    PONTUACAO_DIGITO_5,
+    PONTUACAO_DIGITOS = 5,
+    PONTUACAO_MAXIMA = 99999
 };
 
 enum Enum_Pontuacao_Textura {
@@ -20,6 +22,8 @@ struct Pontos {
     int unidade;
     int dezena;
     int centena;
+    int unidade_de_milhar;
+    int dezena_de_milhar;
 };
 typedef struct Pontos Pontos;
 
@@ -86,9 +90,11 @@ void pontuacao_liberar(Pontuacao **pontuacao) {
 }
 
 void pontuacao_logica(Pontuacao **pontuacao) {
-    SDL_RenderCopy((*pontuacao)->tela, (*pontuacao)->textura[(*pontuacao)->pontos.unidade], NULL, &(*pontuacao)->numero[PONTUACAO_DIGITO_3]);
-    SDL_RenderCopy((*pontuacao)->tela, (*pontuacao)->textura[(*pontuacao)->pontos.dezena], NULL, &(*pontuacao)->numero[PONTUACAO_DIGITO_2]);
-    SDL_RenderCopy((*pontuacao)->tela, (*pontuacao)->textura[(*pontuacao)->pontos.centena], NULL, &(*pontuacao)->numero[PONTUACAO_DIGITO_1]);
+    SDL_RenderCopy((*pontuacao)->tela, (*pontuacao)->textura[(*pontuacao)->pontos.unidade], NULL, &(*pontuacao)->numero[PONTUACAO_DIGITO_5]);
+    SDL_RenderCopy((*pontuacao)->tela, (*pontuacao)->textura[(*pontuacao)->pontos.dezena], NULL, &(*pontuacao)->numero[PONTUACAO_DIGITO_4]);
+    SDL_RenderCopy((*pontuacao)->tela, (*pontuacao)->textura[(*pontuacao)->pontos.centena], NULL, &(*pontuacao)->numero[PONTUACAO_DIGITO_3]);
+    SDL_RenderCopy((*pontuacao)->tela, (*pontuacao)->textura[(*pontuacao)->pontos.unidade_de_milhar], NULL, &(*pontuacao)->numero[PONTUACAO_DIGITO_2]);
+    SDL_RenderCopy((*pontuacao)->tela, (*pontuacao)->textura[(*pontuacao)->pontos.dezena_de_milhar], NULL, &(*pontuacao)->numero[PONTUACAO_DIGITO_1]);
 }
 
 void pontuacao_incrementar(Pontuacao **pontuacao) {
@@ -101,7 +107,17 @@ void pontuacao_incrementar(Pontuacao **pontuacao) {
             (*pontuacao)->pontos.dezena = 0;
 
             if ((*pontuacao)->pontos.centena != 9) (*pontuacao)->pontos.centena++;
-            else pontuacao_resetar(pontuacao);
+            else {
+                (*pontuacao)->pontos.centena = 0;
+
+                if ((*pontuacao)->pontos.unidade_de_milhar != 9) (*pontuacao)->pontos.unidade_de_milhar++;
+                else {
+                    (*pontuacao)->pontos.unidade_de_milhar = 0;
+
+                    if ((*pontuacao)->pontos.dezena_de_milhar != 9) (*pontuacao)->pontos.dezena_de_milhar++;
+                    else pontuacao_resetar(pontuacao);
+                }
+            }
         }
     }
 }
@@ -110,4 +126,6 @@ void pontuacao_resetar(Pontuacao **pontuacao) {
     (*pontuacao)->pontos.unidade = 0;
     (*pontuacao)->pontos.dezena = 0;
     (*pontuacao)->pontos.centena = 0;
+    (*pontuacao)->pontos.unidade_de_milhar = 0;
+    (*pontuacao)->pontos.dezena_de_milhar = 0;
 }
